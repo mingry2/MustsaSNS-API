@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong;
+package com.mutsasns.finalproject_kimmingyeong.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
