@@ -1,21 +1,32 @@
 package com.mutsasns.finalproject_kimmingyeong.service;
 
+import com.mutsasns.finalproject_kimmingyeong.configuration.EncoderConfig;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.UserDto;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.UserLoginResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.User;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
 import com.mutsasns.finalproject_kimmingyeong.repository.UserRepository;
+import com.mutsasns.finalproject_kimmingyeong.utils.JwtTokenUtil;
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
-
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder encoder;
+
+    @Value("${jwt.token.secret}")
+    private String secretKey;
+    private Long expiredTimeMs = 1000 * 60 * 60L; // 1시간
 
     public UserDto join(String userName, String password) {
-
         // userName 중복 체크
         userRepository.findByUserName(userName)
                 .ifPresent(user -> {
@@ -25,9 +36,10 @@ public class UserService {
         // userName,password DB 저장
         User user = User.builder()
                 .userName(userName)
-                .password(password)
+                .password(encoder.encode(password))
                 .build();
         userRepository.save(user);
+        log.debug("User: {}", user);
 
         return UserDto.builder()
                 .id(user.getId())
@@ -35,4 +47,20 @@ public class UserService {
                 .build();
     }
 
+    public UserLoginResponse login(String userName, String password) {
+        // userName 없음
+        User findUser = userRepository.findByUserName(userName)
+                .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
+
+        // password 틀림
+        log.info("findUserName : {} findPassword : {} ", findUser.getPassword(), findUser.getPassword());
+        if (!encoder.matches(password, findUser.getPassword()))
+            throw new AppException(ErrorCode.INVALID_PASSWORD, ErrorCode.INVALID_PASSWORD.getMessage());
+
+        // 성공 -> token 발행
+        String token = JwtTokenUtil.createToken(findUser.getUserName(), secretKey, expiredTimeMs);
+        return UserLoginResponse.builder()
+                .jwt(token)
+                .build();
+    }
 }
