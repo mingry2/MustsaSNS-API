@@ -1,6 +1,7 @@
 package com.mutsasns.finalproject_kimmingyeong.domain.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Data
 public class UserJoinRequest {
     private String userName; // 로그인 시 사용할 user name
     private String password; // 로그인 시 사용할 user password
