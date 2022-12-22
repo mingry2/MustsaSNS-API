@@ -17,6 +17,7 @@ public class PostService {
     // post 작성
     public PostCreateResponse create(String title, String body) {
 
+        // 포스트 등록 완료
         Post post = Post.builder()
                 .title(title)
                 .body(body)
@@ -27,5 +28,6 @@ public class PostService {
                 .message("포스트 등록 완료")
                 .postId(post.getId())
                 .build();
+
     }
 }
