@@ -32,13 +32,14 @@
 ### 회원가입 (url : `/users`)
 **POST `/join`**
 > 입력폼으로 받아온 정보를 DB에 저장   
-> 테스트 2가지 (회원가입 성공,실패(중복id))
+> 테스트 2가지 (회원가입 성공,실패(중복id))    
+> DB에 Request로 받아온 pw를 그대로 저장하지 않고, 암호화를 하여 저장    
+> ㄴBCryptPasswordEncoder encode() 사용
 * 입력폼
 ```json
 {
-  "userName" : "user1",
-  "password" : "user1234",
-  "email" : "user1@abc.com"
+  "userName": "user1",
+  "password": "user1234"
 }
 ```
 * 리턴폼
@@ -64,6 +65,9 @@
 * 리턴폼
 ```json
 {
-    "jwt": "eyJhbGciOiJIU"
+  "resultCode": "SUCCESS",
+  "result": {
+    "jwt": "eyJhbGciOiJIU",
+  }
 }
 ```
