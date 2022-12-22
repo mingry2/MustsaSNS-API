@@ -1,10 +1,13 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostCreateRequest;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostCreateResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
 import com.mutsasns.finalproject_kimmingyeong.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,9 +23,9 @@ public class PostController {
 
     // post 작성
     @PostMapping
-    public ResponseEntity<String> createPost(@RequestBody PostCreateRequest postCreateRequest){
+    public Response<PostCreateResponse> createPost(@RequestBody PostCreateRequest postCreateRequest){
         log.info("title : {} body : {}", postCreateRequest.getTitle(), postCreateRequest.getBody());
-        postService.create(postCreateRequest.getTitle(), postCreateRequest.getBody());
-        return ResponseEntity.ok().body("포스트 등록 완료");
+        PostCreateResponse postCreateResponse = postService.create(postCreateRequest.getTitle(), postCreateRequest.getBody());
+        return Response.success(postCreateResponse);
     }
 }
