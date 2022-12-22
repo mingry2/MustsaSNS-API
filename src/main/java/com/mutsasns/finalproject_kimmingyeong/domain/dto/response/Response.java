@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.domain.dto;
+package com.mutsasns.finalproject_kimmingyeong.domain.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

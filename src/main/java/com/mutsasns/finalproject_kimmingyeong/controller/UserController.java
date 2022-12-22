@@ -1,10 +1,14 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.*;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.UserDto;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinRequest;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.login.UserLoginRequest;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.login.UserLoginResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
 import com.mutsasns.finalproject_kimmingyeong.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +31,7 @@ public class UserController {
 
     @PostMapping("/login")
     public Response<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest){
-        UserLoginResponse userLoginResponse = userService.login(userLoginRequest.getUserName(), userLoginRequest.getPassword());
-        return Response.success(userLoginResponse);
+        String token = userService.login(userLoginRequest.getUserName(), userLoginRequest.getPassword());
+        return Response.success(new UserLoginResponse(token));
     }
 }

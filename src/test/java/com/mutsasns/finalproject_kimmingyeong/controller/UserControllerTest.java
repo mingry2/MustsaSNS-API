@@ -1,9 +1,9 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.UserDto;
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.UserJoinRequest;
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.UserLoginRequest;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.UserDto;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinRequest;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.login.UserLoginRequest;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
 import com.mutsasns.finalproject_kimmingyeong.service.UserService;
@@ -15,7 +15,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.junit.jupiter.api.Assertions.*;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
+@WebMvcTest(UserController.class)
 class UserControllerTest {
 
     @Autowired

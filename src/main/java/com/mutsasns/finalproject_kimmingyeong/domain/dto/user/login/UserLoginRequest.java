@@ -1,14 +1,16 @@
-package com.mutsasns.finalproject_kimmingyeong.domain.dto;
+package com.mutsasns.finalproject_kimmingyeong.domain.dto.user.login;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class UserJoinResponse {
-    private Long id;
+@Builder
+public class UserLoginRequest {
     private String userName;
+    private String password;
 
 }
