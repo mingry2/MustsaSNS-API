@@ -14,4 +14,4 @@ logging:
 
 jwt:
   token:
-    secret: "secretKey"
+    secret:
