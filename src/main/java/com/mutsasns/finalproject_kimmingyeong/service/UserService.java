@@ -1,14 +1,11 @@
 package com.mutsasns.finalproject_kimmingyeong.service;
 
-import com.mutsasns.finalproject_kimmingyeong.configuration.EncoderConfig;
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.UserDto;
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.UserLoginResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.UserDto;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.User;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
 import com.mutsasns.finalproject_kimmingyeong.repository.UserRepository;
 import com.mutsasns.finalproject_kimmingyeong.utils.JwtTokenUtil;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,7 +44,7 @@ public class UserService {
                 .build();
     }
 
-    public UserLoginResponse login(String userName, String password) {
+    public String login(String userName, String password) {
         // userName 없음
         User findUser = userRepository.findByUserName(userName)
                 .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
@@ -59,8 +56,7 @@ public class UserService {
 
         // 성공 -> token 발행
         String token = JwtTokenUtil.createToken(findUser.getUserName(), secretKey, expiredTimeMs);
-        return UserLoginResponse.builder()
-                .jwt(token)
-                .build();
+
+        return token;
     }
 }

@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.domain.dto;
+package com.mutsasns.finalproject_kimmingyeong.domain.dto.response;
 
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
 import lombok.AllArgsConstructor;

@@ -29,7 +29,7 @@
 ---
 
 ## 기능구현
-### 회원가입 (url : `/users`)
+### 회원가입&로그인 (url : `/users`)
 **POST `/join`**
 > 입력폼으로 받아온 정보를 DB에 저장   
 > 테스트 2가지 (회원가입 성공,실패(중복id))    
@@ -71,3 +71,26 @@
   }
 }
 ```
+---
+### 포스트 작성(url : `/posts`)
+**POST `/posts`**
+> 포스트 등록    
+* Request
+```json
+{
+  "title": "title1",
+  "body": "body1"
+}
+```
+* Response
+```json
+{
+	"resultCode":"SUCCESS",
+	"result":{
+		"message":"포스트 등록 완료",
+		"postId":0
+	}
+}
+```
+
+
