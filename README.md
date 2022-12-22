@@ -17,7 +17,7 @@
 - Swagger
 - AWS EC2에 Docker 배포
 - Gitlab CI & Crontab CD
-- 로그인
+- 로그인 
 - 포스트 작성, 수정, 삭제, 리스트
 
 ## Architecture(아키텍처)
