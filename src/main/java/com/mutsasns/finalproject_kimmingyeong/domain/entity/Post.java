@@ -1,5 +1,6 @@
 package com.mutsasns.finalproject_kimmingyeong.domain.entity;
 
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostCreateResponse;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,4 +23,8 @@ public class Post {
 
     private String title;
     private String body;
+
+    public PostCreateResponse toResponse() {
+
+    }
 }
