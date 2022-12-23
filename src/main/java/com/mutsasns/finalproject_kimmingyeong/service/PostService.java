@@ -1,6 +1,7 @@
 package com.mutsasns.finalproject_kimmingyeong.service;
 
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostCreateResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostListResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.Post;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.User;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
@@ -11,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,5 +44,12 @@ public class PostService {
                 .postId(post.getId())
                 .build();
 
+    }
+
+    public List<PostListResponse> getAll() {
+        List<Post> postList = postRepository.findAll();
+        List<PostListResponse> postListResponses = postList.stream()
+                .map(post -> post.toResponse()).collect(Collectors.toList());
+        return postListResponses;
     }
 }
