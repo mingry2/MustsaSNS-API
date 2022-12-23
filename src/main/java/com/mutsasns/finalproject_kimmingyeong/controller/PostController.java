@@ -23,9 +23,9 @@ public class PostController {
 
     // post 작성
     @PostMapping
-    public Response<PostCreateResponse> createPost(@RequestBody PostCreateRequest postCreateRequest){
+    public Response<PostCreateResponse> createPost(@RequestBody PostCreateRequest postCreateRequest, Authentication authentication){
         log.info("title : {} body : {}", postCreateRequest.getTitle(), postCreateRequest.getBody());
-        PostCreateResponse postCreateResponse = postService.create(postCreateRequest.getTitle(), postCreateRequest.getBody());
+        PostCreateResponse postCreateResponse = postService.create(postCreateRequest.getTitle(), postCreateRequest.getBody(), authentication.getName());
         return Response.success(postCreateResponse);
     }
 }
