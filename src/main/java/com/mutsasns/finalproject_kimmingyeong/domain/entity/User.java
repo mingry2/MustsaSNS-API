@@ -18,7 +18,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    private Long userId = null;
+    private Long userId;
 
     private String userName;
     private LocalDateTime updateAt;
