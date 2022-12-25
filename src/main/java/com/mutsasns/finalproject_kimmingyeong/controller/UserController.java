@@ -1,6 +1,5 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.UserDto;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinRequest;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.login.UserLoginRequest;
@@ -24,9 +23,9 @@ public class UserController {
 
     @PostMapping("/join")
     public Response<UserJoinResponse> join(@RequestBody UserJoinRequest userJoinRequest){
-        UserDto userDto = userService.join(userJoinRequest.getUserName(), userJoinRequest.getPassword());
-        log.debug("userDto : {} ", userDto);
-        return Response.success(new UserJoinResponse(userDto.getId(), userDto.getUserName()));
+        UserJoinResponse userJoinResponse = userService.join(userJoinRequest.getUserName(), userJoinRequest.getPassword());
+        log.debug("userJoinResponse : {} ", userJoinResponse);
+        return Response.success(userJoinResponse);
     }
 
     @PostMapping("/login")

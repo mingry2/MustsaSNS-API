@@ -10,4 +10,5 @@ import lombok.Getter;
 public class PostCreateRequest {
     private String title;
     private String body;
+
 }

@@ -1,8 +1,8 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.UserDto;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinRequest;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.login.UserLoginRequest;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
@@ -44,7 +44,7 @@ class UserControllerTest {
         String password = "kmk1234";
 
         when(userService.join(any(), any()))
-                .thenReturn(mock(UserDto.class));
+                .thenReturn(mock(UserJoinResponse.class));
 
         mockMvc.perform(post("/api/v1/users/join")
                         .with(csrf())
