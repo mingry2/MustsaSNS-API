@@ -1,6 +1,6 @@
 package com.mutsasns.finalproject_kimmingyeong.service;
 
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.UserDto;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.User;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
@@ -23,7 +23,7 @@ public class UserService {
     private String secretKey;
     private Long expiredTimeMs = 1000 * 60 * 60L; // 1시간
 
-    public UserDto join(String userName, String password) {
+    public UserJoinResponse join(String userName, String password) {
         // userName 중복 체크
         userRepository.findByUserName(userName)
                 .ifPresent(user -> {
@@ -38,8 +38,8 @@ public class UserService {
         userRepository.save(user);
         log.debug("User: {}", user);
 
-        return UserDto.builder()
-                .id(user.getId())
+        return UserJoinResponse.builder()
+                .userId(user.getUserId())
                 .userName(user.getUserName())
                 .build();
     }

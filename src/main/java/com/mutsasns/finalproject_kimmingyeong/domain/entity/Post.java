@@ -1,22 +1,18 @@
 package com.mutsasns.finalproject_kimmingyeong.domain.entity;
 
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostCreateResponse;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostListResponse;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Builder
-public class Post {
+@Data
+public class Post extends PostBase{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -24,7 +20,8 @@ public class Post {
     private String title;
     private String body;
 
-    public PostCreateResponse toResponse() {
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    }
 }
