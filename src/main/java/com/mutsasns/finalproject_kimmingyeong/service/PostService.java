@@ -44,7 +44,7 @@ public class PostService {
 
         return PostCreateResponse.builder()
                 .message("포스트 등록 완료")
-                .postId(post.getId())
+                .postId(post.getPostId())
                 .build();
 
     }
@@ -56,4 +56,20 @@ public class PostService {
         return postListResponses;
     }
 
+    public PostListResponse getPost(Long postId) {
+
+        // postId를 가진 포스트가 없을 경우
+        Post findByIdPost = postRepository.findById(postId)
+                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
+
+        // 포스트 조회 완료
+        return PostListResponse.builder()
+                .id(findByIdPost.getPostId())
+                .title(findByIdPost.getTitle())
+                .body(findByIdPost.getBody())
+                .userName(findByIdPost.getUser().getUserName())
+                .createdAt(findByIdPost.getCreatedAt())
+                .lastModifiedAt(findByIdPost.getLastModifiedAt())
+                .build();
+    }
 }

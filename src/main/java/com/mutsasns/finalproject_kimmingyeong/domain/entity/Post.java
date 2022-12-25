@@ -15,7 +15,7 @@ import javax.persistence.*;
 public class Post extends PostBase{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long postId;
 
     private String title;
     private String body;
