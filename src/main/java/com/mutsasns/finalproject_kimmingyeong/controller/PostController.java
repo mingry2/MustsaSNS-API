@@ -1,8 +1,7 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostCreateRequest;
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostCreateResponse;
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostListResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostDeletedResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.*;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.Post;
 import com.mutsasns.finalproject_kimmingyeong.service.PostService;
@@ -14,12 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.sun.tools.attach.VirtualMachine.list;
 
@@ -48,10 +43,34 @@ public class PostController {
         return Response.success(list);
     }
 
+    // postId로 조회하여 해당 id의 post 조회하기
     @GetMapping("/{postId}")
     public Response<PostListResponse> findById(@PathVariable Long postId){
         log.debug("postId : {} ", postId);
         PostListResponse postListResponse = postService.getPost(postId);
         return Response.success(postListResponse);
+    }
+
+    // postId로 조회한 포스트 수정하기
+    @PutMapping("/{postId}")
+    public Response<PostModifiedResponse> modify(@PathVariable Long postId, @RequestBody PostModifyRequest postModifyRequest, Authentication authentication){
+        log.debug("userName : {} postId : {} title : {} body : {} ", authentication.getName(), postId, postModifyRequest.getTitle(), postModifyRequest.getBody());
+        Post post = postService.modify(authentication.getName(), postId, postModifyRequest.getTitle(), postModifyRequest.getBody());
+        PostModifiedResponse postModifiedResponse = PostModifiedResponse.builder()
+                .message("포스트 수정 완료")
+                .postId(post.getPostId())
+                .build();
+        return Response.success(postModifiedResponse);
+    }
+
+    // postId로 조회한 포스트 삭제하기
+    @DeleteMapping("/{postId}")
+    public Response<PostDeletedResponse> delete(@PathVariable Long postId, Authentication authentication){
+        String deletedPost = postService.delete(postId, authentication.getName());
+        PostDeletedResponse postDeletedResponse = PostDeletedResponse.builder()
+                .message("포스트 삭제 완료")
+                .postId(postId)
+                .build();
+        return Response.success(postDeletedResponse);
     }
 }

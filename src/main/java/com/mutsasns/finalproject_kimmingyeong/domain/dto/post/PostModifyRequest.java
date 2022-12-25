@@ -7,8 +7,7 @@ import lombok.*;
 @Getter
 @Builder
 @Data
-public class PostCreateResponse {
-    private String message;
-    private Long postId;
-
+public class PostModifyRequest {
+    private String title;
+    private String body;
 }
