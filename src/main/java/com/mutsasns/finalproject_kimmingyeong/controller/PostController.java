@@ -4,6 +4,7 @@ import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostCreateRequest;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostCreateResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostListResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
+import com.mutsasns.finalproject_kimmingyeong.domain.entity.Post;
 import com.mutsasns.finalproject_kimmingyeong.service.PostService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -45,5 +46,12 @@ public class PostController {
         Page<PostListResponse> list = postService.getAll(pageable);
         log.info("list : {} ", list());
         return Response.success(list);
+    }
+
+    @GetMapping("/{postId}")
+    public Response<PostListResponse> findById(@PathVariable Long postId){
+        log.debug("postId : {} ", postId);
+        PostListResponse postListResponse = postService.getPost(postId);
+        return Response.success(postListResponse);
     }
 }
