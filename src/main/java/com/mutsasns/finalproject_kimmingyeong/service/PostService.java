@@ -89,7 +89,7 @@ public class PostService {
         Long userId = user.getUserId();
 
         // User DB에 저장된 userId와 Post DB에 저장된 postId가 같지 않다면, 권한 없음 에러 처리 -> 같아야 userName이 동일한것
-        if (!Objects.equals(post.getPostId(), userId)) {
+        if (!Objects.equals(post.getUser().getUserId(), userId)) {
             throw new AppException(ErrorCode.INVALID_PERMISSION, ErrorCode.INVALID_PERMISSION.getMessage());
         }
 
@@ -114,7 +114,7 @@ public class PostService {
         Long userId = user.getUserId();
 
         // User DB에 저장된 userId와 Post DB에 저장된 postId가 같지 않다면, 권한 없음 에러 처리 -> 같아야 userName이 동일한것
-        if (!Objects.equals(post.getPostId(), userId)) {
+        if (!Objects.equals(post.getUser().getUserId(), userId)) {
             throw new AppException(ErrorCode.INVALID_PERMISSION, ErrorCode.INVALID_PERMISSION.getMessage());
         }
 
