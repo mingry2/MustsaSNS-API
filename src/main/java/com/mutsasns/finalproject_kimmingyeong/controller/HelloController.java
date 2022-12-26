@@ -12,6 +12,6 @@ public class HelloController {
     // http://localhost:8080/api/v1/hello
     @GetMapping
     public ResponseEntity<String> hello() {
-        return ResponseEntity.ok().body("popin");
+        return ResponseEntity.ok().body("happy_new_year");
     }
 }
