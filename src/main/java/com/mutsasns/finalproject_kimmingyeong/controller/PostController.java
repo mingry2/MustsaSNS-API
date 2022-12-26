@@ -48,6 +48,7 @@ public class PostController {
     public Response<PostListResponse> findById(@PathVariable Long postId){
         log.debug("postId : {} ", postId);
         PostListResponse postListResponse = postService.getPost(postId);
+        log.debug("postListResponse : {} ", postListResponse);
         return Response.success(postListResponse);
     }
 
