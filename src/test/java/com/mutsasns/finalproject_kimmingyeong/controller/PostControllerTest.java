@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostCreateRequest;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostCreateResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostListResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostModifyRequest;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.Post;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.User;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
@@ -26,6 +27,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.parameters.P;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -37,8 +39,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -169,6 +170,141 @@ class PostControllerTest {
         assertEquals(0, pageRequest.getPageNumber());
         assertEquals(3, pageRequest.getPageSize());
         assertEquals(Sort.by("createdAt", "desc"), pageRequest.withSort(Sort.by("createdAt","desc")).getSort());
+
+    }
+
+    @Test
+    @DisplayName("포스트 수정 성공")
+    @WithMockUser // 인증된 사용자를 테스트에서 사용할 경우
+    void post_modify_success() throws Exception {
+
+        // 수정한 title, body의 request
+        PostModifyRequest modifyRequest = PostModifyRequest.builder()
+                .title("test title")
+                .body("test body")
+                .build();
+
+        // 수정할 postId
+        Post post = Post.builder()
+                .postId(1L)
+                .build();
+
+        // 인증, postId, title, body
+        when(postService.modify(any(),any(),any(),any()))
+                .thenReturn(post);
+
+        mockMvc.perform(put("/api/v1/posts/1")
+                .with(csrf())
+                // json 형식으로 변경
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(modifyRequest)))
+                .andDo(print())
+                .andExpect(jsonPath("$.result.message").exists())
+                .andExpect(jsonPath("$.result.postId").exists())
+                .andExpect(status().isOk());
+
+    }
+
+    @Test
+    @DisplayName("포스트 수정 실패(1) - 인증 실패")
+    @WithAnonymousUser // 인증되지 않은 사용자를 테스트에서 사용할 경우
+    void post_modify_fail1() throws Exception {
+
+        // 수정한 title, body의 request
+        PostModifyRequest modifyRequest = PostModifyRequest.builder()
+                .title("test title")
+                .body("test body")
+                .build();
+
+        // 인증, postId, title, body -> '인증'인자가 권한없음
+        when(postService.modify(any(),any(),any(),any()))
+                .thenThrow(new AppException(ErrorCode.INVALID_PERMISSION, ErrorCode.INVALID_PERMISSION.getMessage()));
+
+        mockMvc.perform(put("/api/v1/posts/1")
+                        .with(csrf())
+                        // json 형식으로 변경
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(modifyRequest)))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+
+    }
+
+    @Test
+    @DisplayName("포스트 수정 실패(2) - 포스트 내용 불일치")
+    @WithMockUser
+    void post_modify_fail2() throws Exception {
+
+        // 수정한 title, body의 request
+        PostModifyRequest modifyRequest = PostModifyRequest.builder()
+                .title("test title")
+                .body("test body")
+                .build();
+
+        // 인증, postId, title, body -> 'postId'로 넘어온 인자의 포스트가 없음
+        when(postService.modify(any(),any(),any(),any()))
+                .thenThrow(new AppException(ErrorCode.POST_NOT_FOUND,ErrorCode.POST_NOT_FOUND.getMessage()));
+
+        mockMvc.perform(put("/api/v1/posts/1")
+                        .with(csrf())
+                        // json 형식으로 변경
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(modifyRequest)))
+                .andDo(print())
+                // ErrorCode에 정의되어있는 에러의 HttpStatus 값 가져오기
+                .andExpect(status().is(ErrorCode.POST_NOT_FOUND.getHttpStatus().value()));
+
+    }
+
+    @Test
+    @DisplayName("포스트 수정 실패(3) - 작성자 불일치")
+    @WithMockUser
+    void post_modify_fail3() throws Exception {
+
+        // 수정한 title, body의 request
+        PostModifyRequest modifyRequest = PostModifyRequest.builder()
+                .title("test title")
+                .body("test body")
+                .build();
+
+        // 인증, postId, title, body -> token의 userName과 수정할 postId의 userName이 다를 때
+        when(postService.modify(any(),any(),any(),any()))
+                .thenThrow(new AppException(ErrorCode.INVALID_PERMISSION, ErrorCode.INVALID_PERMISSION.getMessage()));
+
+        mockMvc.perform(put("/api/v1/posts/1")
+                        .with(csrf())
+                        // json 형식으로 변경
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(modifyRequest)))
+                .andDo(print())
+                // ErrorCode에 정의되어있는 에러의 HttpStatus 값 가져오기
+                .andExpect(status().is(ErrorCode.INVALID_PERMISSION.getHttpStatus().value()));
+
+    }
+
+    @Test
+    @DisplayName("포스트 수정 실패(4) - 데이터베이스 에러")
+    @WithMockUser
+    void post_modify_fail4() throws Exception {
+
+        // 수정한 title, body의 request
+        PostModifyRequest modifyRequest = PostModifyRequest.builder()
+                .title("test title")
+                .body("test body")
+                .build();
+
+        // 인증, postId, title, body -> 수정완료하려고 하는데 갑자기 데이터베이스와의 연결이 끊어져 확인할 수 없는경우
+        when(postService.modify(any(),any(),any(),any()))
+                .thenThrow(new AppException(ErrorCode.DATABASE_ERROR,ErrorCode.DATABASE_ERROR.getMessage()));
+
+        mockMvc.perform(put("/api/v1/posts/1")
+                        .with(csrf())
+                        // json 형식으로 변경
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(modifyRequest)))
+                .andDo(print())
+                // ErrorCode에 정의되어있는 에러의 HttpStatus 값 가져오기
+                .andExpect(status().is(ErrorCode.DATABASE_ERROR.getHttpStatus().value()));
 
     }
 
