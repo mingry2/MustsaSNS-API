@@ -77,7 +77,7 @@ http://ec2-13-209-2-255.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/
 ![img.png](img.png)
 
 ## ERD
-![img_1.png](img_1.png)
+![img_2.png](img_2.png)
 
 ## 😎 기능구현
 ### 회원가입&로그인 (url : `api/v1/users`)
