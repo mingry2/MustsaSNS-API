@@ -324,31 +324,49 @@ class PostControllerTest {
 
     }
 
-//    @Test
-//    @DisplayName("포스트 삭제 실패(1) - 인증 실패")
-//    @WithAnonymousUser // 인증되지 않은 사용자를 테스트에서 사용할 경우
-//    void post_delete_fail1() throws Exception {
-//
-//        // 수정한 title, body의 request
-//        PostModifyRequest modifyRequest = PostModifyRequest.builder()
-//                .title("test title")
-//                .body("test body")
-//                .build();
-//
-//        // 인증, postId, title, body -> '인증'인자가 권한없음
-//        when(postService.modify(any(),any(),any(),any()))
-//                .thenThrow(new AppException(ErrorCode.INVALID_PERMISSION, ErrorCode.INVALID_PERMISSION.getMessage()));
-//
-//        mockMvc.perform(put("/api/v1/posts/1")
-//                        .with(csrf())
-//                        // json 형식으로 변경
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsBytes(modifyRequest)))
-//                .andDo(print())
-//                .andExpect(status().isUnauthorized());
-//
-//    }
+    @Test
+    @DisplayName("포스트 삭제 실패(1) - 인증 실패")
+    @WithMockUser
+    void post_delete_fail1() throws Exception {
+        // 인증, postId, title, body -> '인증'인자가 권한없음
+        when(postService.delete(any(),any()))
+                .thenThrow(new AppException(ErrorCode.INVALID_PERMISSION, ErrorCode.INVALID_PERMISSION.getMessage()));
 
+        mockMvc.perform(delete("/api/v1/posts/1")
+                        .with(csrf()))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
 
+    }
+
+    @Test
+    @DisplayName("포스트 삭제 실패(2) - 작성자 불일치")
+    @WithMockUser
+    void post_delete_fail2() throws Exception {
+        // 인증, postId, title, body -> postId와 userId가 다름
+        when(postService.delete(any(),any()))
+                .thenThrow(new AppException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
+
+        mockMvc.perform(delete("/api/v1/posts/1")
+                        .with(csrf()))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+
+    }
+
+    @Test
+    @DisplayName("포스트 삭제 실패(3) - 데이터베이스 에러")
+    @WithMockUser
+    void post_delete_fail3() throws Exception {
+        // 인증, postId, title, body -> postId와 userId가 다름
+        when(postService.delete(any(),any()))
+                .thenThrow(new AppException(ErrorCode.DATABASE_ERROR, ErrorCode.DATABASE_ERROR.getMessage()));
+
+        mockMvc.perform(delete("/api/v1/posts/1")
+                        .with(csrf()))
+                .andDo(print())
+                .andExpect(status().isUnauthorized());
+
+    }
 
 }
