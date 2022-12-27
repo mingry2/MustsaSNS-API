@@ -1,5 +1,6 @@
+<div align="center">
 ![header](https://capsule-render.vercel.app/api?type=wave&color=auto&height=300&section=header&text=mutsaSNS&%20render&fontSize=90)
-
+</div>
 <div align="center">
  <h1>📢 Tech Stack </h1>
 </div>
