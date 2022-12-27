@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -243,6 +244,118 @@ class PostServiceTest {
                 () -> postService.modify(String.valueOf(post.getUser().getUserId()), post.getPostId(), post.getTitle(), post.getBody()));
 
         assertEquals(ErrorCode.USERNAME_NOT_FOUND, exception.getErrorCode());
+
+    }
+
+    @Test
+    @DisplayName("포스트 삭제 성공")
+    void post_delete_success() {
+        String userName = "user";
+        String password = "1q2w3e4r";
+
+        User user = User.builder()
+                .userId(1L)
+                .userName(userName)
+                .password(password)
+                .role(UserRole.USER)
+                .registeredAt(LocalDateTime.now())
+                .build();
+
+        Post post = Post.builder()
+                .postId(1L)
+                .user(user)
+                .title("test title")
+                .body("test body")
+                .build();
+
+        Post mockPost = mock(Post.class);
+        User mockUser = mock(User.class);
+
+        when(postRepository.findById(post.getPostId()))
+                .thenReturn(Optional.of(mockPost));
+        System.out.println(post.getPostId());
+
+        when(userRepository.findByUserName(post.getUser().getUserName()))
+                .thenReturn(Optional.of(user));
+        System.out.println(post.getUser().getUserName());
+
+        when(mockPost.getUser()).thenReturn(user);
+
+        System.out.println(user.getUserId());
+        System.out.println(user.getUserName());
+
+        boolean b = postService.delete(post.getPostId(), user.getUserName());
+        assertTrue(b);
+
+    }
+
+    @Test
+    @DisplayName("포스트 삭제 실패(1): 유저 존재하지 않음")
+    void post_delete_fail1() {
+        String userName = "user";
+        String password = "1q2w3e4r";
+
+        User user = User.builder()
+                .userId(1L)
+                .userName(userName)
+                .password(password)
+                .role(UserRole.USER)
+                .registeredAt(LocalDateTime.now())
+                .build();
+
+        Post post = Post.builder()
+                .postId(1L)
+                .user(user)
+                .title("test title")
+                .body("test body")
+                .build();
+
+        Post mockPost = mock(Post.class);
+        User mockUser = mock(User.class);
+
+        when(postRepository.findById(post.getPostId()))
+                .thenReturn(Optional.of(mockPost));
+
+        when(userRepository.findByUserName(post.getUser().getUserName()))
+                .thenReturn(Optional.empty());
+
+        AppException exception = Assertions.assertThrows(AppException.class, () -> postService.delete(post.getPostId(), post.getUser().getUserName()));
+        assertEquals(ErrorCode.USERNAME_NOT_FOUND, exception.getErrorCode());
+
+    }
+
+    @Test
+    @DisplayName("포스트 삭제 실패(2): 포스트 존재하지 않음")
+    void post_delete_fail2() {
+        String userName = "user";
+        String password = "1q2w3e4r";
+
+        User user = User.builder()
+                .userId(1L)
+                .userName(userName)
+                .password(password)
+                .role(UserRole.USER)
+                .registeredAt(LocalDateTime.now())
+                .build();
+
+        Post post = Post.builder()
+                .postId(1L)
+                .user(user)
+                .title("test title")
+                .body("test body")
+                .build();
+
+        Post mockPost = mock(Post.class);
+        User mockUser = mock(User.class);
+
+        when(postRepository.findById(post.getPostId()))
+                .thenReturn(Optional.empty());
+
+        when(userRepository.findByUserName(post.getUser().getUserName()))
+                .thenReturn(Optional.of(user));
+
+        AppException exception = Assertions.assertThrows(AppException.class, () -> postService.delete(post.getPostId(), post.getUser().getUserName()));
+        assertEquals(ErrorCode.POST_NOT_FOUND, exception.getErrorCode());
 
     }
 

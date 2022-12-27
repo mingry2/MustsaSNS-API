@@ -67,7 +67,7 @@ public class PostController {
     // postId로 조회한 포스트 삭제하기
     @DeleteMapping("/{postId}")
     public Response<PostDeletedResponse> delete(@PathVariable Long postId, Authentication authentication){
-        String deletedPost = postService.delete(postId, authentication.getName());
+        postService.delete(postId, authentication.getName());
         PostDeletedResponse postDeletedResponse = PostDeletedResponse.builder()
                 .message("포스트 삭제 완료")
                 .postId(postId)

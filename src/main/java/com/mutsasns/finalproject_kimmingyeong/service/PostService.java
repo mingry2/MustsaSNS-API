@@ -102,7 +102,9 @@ public class PostService {
         return savedPost;
     }
 
-    public String delete(Long postId, String userName) {
+    public boolean delete(Long postId, String userName) {
+        log.debug("postId: {} userName: {} ", postId, userName);
+
         // postId에 해당하는 포스트가 없을 경우
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
@@ -112,6 +114,7 @@ public class PostService {
                 .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
 
         Long userId = user.getUserId();
+        log.debug("userId: {} ", userId);
 
         // User DB에 저장된 userId와 Post DB에 저장된 postId가 같지 않다면, 권한 없음 에러 처리 -> 같아야 userName이 동일한것
         if (!Objects.equals(post.getUser().getUserId(), userId)) {
@@ -120,6 +123,6 @@ public class PostService {
 
         postRepository.deleteById(postId);
 
-        return "포스트 삭제 완료";
+        return true;
     }
 }
