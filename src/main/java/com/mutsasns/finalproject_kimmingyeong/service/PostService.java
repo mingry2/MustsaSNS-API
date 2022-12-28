@@ -1,6 +1,6 @@
 package com.mutsasns.finalproject_kimmingyeong.service;
 
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostCreateResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostListResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.Post;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.User;
@@ -12,23 +12,18 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class PostService {
-
     private final PostRepository postRepository;
     private final UserRepository userRepository;
 
-    // post 작성
-    public PostCreateResponse create(String title, String body, String userName) {
+    // 포스트 등록
+    public PostResponse create(String title, String body, String userName) {
         // userName 없음
         log.info("userName : {} ", userName);
         User user = userRepository.findByUserName(userName)
@@ -43,24 +38,24 @@ public class PostService {
                 .build();
         postRepository.save(post);
 
-        return PostCreateResponse.builder()
+        return PostResponse.builder()
                 .message("포스트 등록 완료")
                 .postId(post.getPostId())
                 .build();
 
     }
 
-    // post 전체 list 보기
+    // 포스트 전체 조회
     public Page<PostListResponse> getAll(Pageable pageable){
         Page<Post> postList = postRepository.findAll(pageable);
         Page<PostListResponse> postListResponses = PostListResponse.toResponse(postList);
         return postListResponses;
     }
 
-    // postId의 포스트만 조회하기
+    // 포스트 1개 조회
     public PostListResponse getPost(Long postId) {
 
-        // postId를 가진 포스트가 없을 경우
+        // postId 없는 경우
         Post findByIdPost = postRepository.findById(postId)
                 .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
 
@@ -75,10 +70,10 @@ public class PostService {
                 .build();
     }
 
-    // postId 조회 후 수정
-    public Post modify(String userName, Long postId, String title, String body) {
+    // 포스트 수정
+    public PostResponse modify(String userName, Long postId, String title, String body) {
 
-        // postId에 해당하는 포스트가 없을 경우
+        // postId 없는 경우
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
 
@@ -93,19 +88,22 @@ public class PostService {
             throw new AppException(ErrorCode.INVALID_PERMISSION, ErrorCode.INVALID_PERMISSION.getMessage());
         }
 
-        // 포스트 저장
+        // 수정 포스트 저장
         post.setTitle(title); // PostModifyRequest에서 수정한 title로 post에 저장
         post.setBody(body); // PostModifyRequest에서 수정한 body로 post에 저장
-
         Post savedPost = postRepository.saveAndFlush(post);
 
-        return savedPost;
+        return PostResponse.builder()
+                .message("포스트 수정 완료")
+                .postId(savedPost.getPostId())
+                .build();
     }
 
+    // 포스트 삭제
     public boolean delete(Long postId, String userName) {
         log.debug("postId: {} userName: {} ", postId, userName);
 
-        // postId에 해당하는 포스트가 없을 경우
+        // postId 없는 경우
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
 

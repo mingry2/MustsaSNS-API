@@ -1,9 +1,7 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostDeletedResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.*;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
-import com.mutsasns.finalproject_kimmingyeong.domain.entity.Post;
 import com.mutsasns.finalproject_kimmingyeong.service.PostService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
 import static com.sun.tools.attach.VirtualMachine.list;
 
 @RestController
@@ -27,15 +24,15 @@ public class PostController {
 
     private final PostService postService;
 
-    // post 작성
+    // 포스트 작성
     @PostMapping("")
-    public Response<PostCreateResponse> createPost(@RequestBody PostCreateRequest postCreateRequest, Authentication authentication){
-        log.info("title : {} body : {}", postCreateRequest.getTitle(), postCreateRequest.getBody());
-        PostCreateResponse postCreateResponse = postService.create(postCreateRequest.getTitle(), postCreateRequest.getBody(), authentication.getName());
-        return Response.success(postCreateResponse);
+    public Response<PostResponse> createPost(@RequestBody PostRequest postRequest, Authentication authentication){
+        log.info("title : {} body : {}", postRequest.getTitle(), postRequest.getBody());
+        PostResponse postResponse = postService.create(postRequest.getTitle(), postRequest.getBody(), authentication.getName());
+        return Response.success(postResponse);
     }
 
-    // post 전체 list 보기
+    // 포스트 전체 조회
     @GetMapping("")
     public Response<Page<PostListResponse>> postList(@PageableDefault(size = 20) @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable){
         Page<PostListResponse> list = postService.getAll(pageable);
@@ -43,7 +40,7 @@ public class PostController {
         return Response.success(list);
     }
 
-    // postId로 조회하여 해당 id의 post 조회하기
+    // 포스트 1개 조회
     @GetMapping("/{postId}")
     public Response<PostListResponse> findById(@PathVariable Long postId){
         log.debug("postId : {} ", postId);
@@ -52,23 +49,19 @@ public class PostController {
         return Response.success(postListResponse);
     }
 
-    // postId로 조회한 포스트 수정하기
+    // 포스트 수정
     @PutMapping("/{postId}")
-    public Response<PostModifiedResponse> modify(@PathVariable Long postId, @RequestBody PostModifyRequest postModifyRequest, Authentication authentication){
+    public Response<PostResponse> modify(@PathVariable Long postId, @RequestBody PostRequest postModifyRequest, Authentication authentication){
         log.debug("userName : {} postId : {} title : {} body : {} ", authentication.getName(), postId, postModifyRequest.getTitle(), postModifyRequest.getBody());
-        Post post = postService.modify(authentication.getName(), postId, postModifyRequest.getTitle(), postModifyRequest.getBody());
-        PostModifiedResponse postModifiedResponse = PostModifiedResponse.builder()
-                .message("포스트 수정 완료")
-                .postId(post.getPostId())
-                .build();
+        PostResponse postModifiedResponse = postService.modify(authentication.getName(), postId, postModifyRequest.getTitle(), postModifyRequest.getBody());
         return Response.success(postModifiedResponse);
     }
 
-    // postId로 조회한 포스트 삭제하기
+    // 포스트 삭제
     @DeleteMapping("/{postId}")
-    public Response<PostDeletedResponse> delete(@PathVariable Long postId, Authentication authentication){
+    public Response<PostResponse> delete(@PathVariable Long postId, Authentication authentication){
         postService.delete(postId, authentication.getName());
-        PostDeletedResponse postDeletedResponse = PostDeletedResponse.builder()
+        PostResponse postDeletedResponse = PostResponse.builder()
                 .message("포스트 삭제 완료")
                 .postId(postId)
                 .build();
