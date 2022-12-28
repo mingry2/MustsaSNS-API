@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/hello")
 public class HelloController {
 
-    // http://localhost:8080/api/v1/hello
     @GetMapping
     public ResponseEntity<String> hello() {
         return ResponseEntity.ok().body("김민경");

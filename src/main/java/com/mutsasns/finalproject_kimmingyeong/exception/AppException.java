@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 public class AppException extends RuntimeException{
 
-    private ErrorCode errorCode; // 에러 코드 리스트
-    private String message; // 에러 메세지
+    private ErrorCode errorCode;
+    private String message;
 }

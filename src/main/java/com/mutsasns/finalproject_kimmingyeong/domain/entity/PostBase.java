@@ -20,12 +20,11 @@ import java.time.format.DateTimeFormatter;
 
 @Getter
 @Service
-// [JPA] 부모 클래스는 테이블과 매핑하지 않고 부모 클래스를 상속받는 자식 클래스에게 매핑 정보만 제공
-@MappedSuperclass
+@MappedSuperclass // [JPA] 부모 클래스는 테이블과 매핑하지 않고 부모 클래스를 상속받는 자식 클래스에게 매핑 정보만 제공
 @EntityListeners(AuditingEntityListener.class)
 @Slf4j
 public class PostBase {
-    @CreatedDate // Entity가 생성되어 저장될 때 시간 자동 저장
+    @CreatedDate // [jpa] Entity가 생성되어 저장될 때 시간 자동 저장
     @Column(updatable = false) // updatable = false : column 수정 시 값 변경을 막는다.
     private LocalDateTime createdAt;
 

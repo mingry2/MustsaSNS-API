@@ -23,6 +23,7 @@ public class UserService {
     private String secretKey;
     private Long expiredTimeMs = 1000 * 60 * 60L; // 1시간
 
+    // 회원가입
     public UserJoinResponse join(String userName, String password) {
         // userName 중복 체크
         userRepository.findByUserName(userName)
@@ -30,7 +31,7 @@ public class UserService {
                     throw new AppException(ErrorCode.DUPLICATED_USER_NAME, ErrorCode.DUPLICATED_USER_NAME.getMessage());
                 });
 
-        // userName,password DB 저장
+        // DB 저장
         User user = User.builder()
                 .userName(userName)
                 .password(encoder.encode(password))
@@ -44,6 +45,7 @@ public class UserService {
                 .build();
     }
 
+    // 로그인
     public String login(String userName, String password) {
         // userName 없음
         User findUser = userRepository.findByUserName(userName)

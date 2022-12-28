@@ -7,7 +7,8 @@ import lombok.*;
 @Getter
 @Builder
 @Data
-public class PostModifiedResponse {
+public class PostResponse {
     private String message;
     private Long postId;
+
 }

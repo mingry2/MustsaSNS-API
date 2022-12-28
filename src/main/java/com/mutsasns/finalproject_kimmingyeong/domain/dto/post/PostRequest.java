@@ -1,13 +1,14 @@
 package com.mutsasns.finalproject_kimmingyeong.domain.dto.post;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
-@Builder
 @Data
-public class PostModifyRequest {
+public class PostRequest {
     private String title;
     private String body;
+
 }

@@ -21,13 +21,16 @@ public class UserController {
 
     private final UserService userService;
 
+    // 회원가입
     @PostMapping("/join")
     public Response<UserJoinResponse> join(@RequestBody UserJoinRequest userJoinRequest){
+        log.debug("userName : {} password : {}  ", userJoinRequest.getUserName(), userJoinRequest.getPassword());
         UserJoinResponse userJoinResponse = userService.join(userJoinRequest.getUserName(), userJoinRequest.getPassword());
         log.debug("userJoinResponse : {} ", userJoinResponse);
         return Response.success(userJoinResponse);
     }
 
+    // 로그인
     @PostMapping("/login")
     public Response<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest){
         String token = userService.login(userLoginRequest.getUserName(), userLoginRequest.getPassword());

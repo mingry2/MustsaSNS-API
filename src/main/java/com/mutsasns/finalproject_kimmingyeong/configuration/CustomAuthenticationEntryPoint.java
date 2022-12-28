@@ -22,7 +22,6 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
         if(exception.equals(ErrorCode.INVALID_TOKEN)) {
             setResponse(response, ErrorCode.INVALID_TOKEN);
         }
-
     }
 
     private void setResponse(HttpServletResponse response, ErrorCode errorCode) throws IOException {
