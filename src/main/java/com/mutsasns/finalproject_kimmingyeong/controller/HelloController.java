@@ -14,6 +14,11 @@ public class HelloController {
 
     @GetMapping("/{num}")
     public  ResponseEntity<Integer> sum(@PathVariable Integer num) {
-        return ResponseEntity.ok().body(num);
+        int sum = 0;
+        while(num!=0) {
+            sum += num % 10;
+            num /= 10;
+        }
+        return ResponseEntity.ok().body(sum);
     }
 }
