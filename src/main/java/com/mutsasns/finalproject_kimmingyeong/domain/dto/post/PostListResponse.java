@@ -33,7 +33,6 @@ public class PostListResponse {
 
     // Post -> PostListResponse
     public static Page<PostListResponse> toResponse(Page<Post> postList) {
-//        log.debug("User name in post entity: {}", post.getUser().getUserName());
         Page<PostListResponse> postListResponses = postList.map(post -> PostListResponse.builder()
                 .id(post.getPostId())
                 .title(post.getTitle())
