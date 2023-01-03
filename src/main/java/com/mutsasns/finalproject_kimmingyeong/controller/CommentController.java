@@ -22,8 +22,8 @@ public class CommentController {
     // 댓글 등록
     @PostMapping("/{postsId}/comments")
     public Response<CommentCreateResponse> createComment(@PathVariable Long postsId, @RequestBody CommentCreateRequest commentCreateRequest, Authentication authentication){
-        log.debug("postId : {} comment : {} userName : {}", postsId, commentCreateRequest.getComment(), authentication.getName());
-        CommentCreateResponse commentCreateResponse = commentService.create(postsId, commentCreateRequest.getComment(), authentication.getName());
+        log.debug("postId : {} comment : {} userName : {}", postsId, commentCreateRequest, authentication.getName());
+        CommentCreateResponse commentCreateResponse = commentService.create(postsId, commentCreateRequest, authentication.getName());
         return Response.success(commentCreateResponse);
     }
 }
