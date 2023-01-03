@@ -1,12 +1,12 @@
 package com.mutsasns.finalproject_kimmingyeong.domain.entity;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+//@javax.persistence.Entity
 @Entity
 @Getter
 @AllArgsConstructor
@@ -32,6 +32,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Post> post = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Comment> comment = new ArrayList<>();
 
 
 }
