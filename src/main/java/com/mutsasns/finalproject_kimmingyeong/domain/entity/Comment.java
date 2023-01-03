@@ -3,8 +3,7 @@ package com.mutsasns.finalproject_kimmingyeong.domain.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @javax.persistence.Entity
 @AllArgsConstructor
@@ -12,19 +11,20 @@ import java.util.List;
 @Getter
 @Builder
 @Data
-public class Post extends BaseEntity {
+public class Comment extends BaseEntity{
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
+    private Long commentId;
 
-    private String title;
-    private String body;
+    private String comment;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
-    private List<Comment> comment = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "post_id")
+    private Post post;
 
 }

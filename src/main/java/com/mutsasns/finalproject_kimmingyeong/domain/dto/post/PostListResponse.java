@@ -2,14 +2,12 @@ package com.mutsasns.finalproject_kimmingyeong.domain.dto.post;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.Post;
-import com.mutsasns.finalproject_kimmingyeong.domain.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.security.core.Authentication;
 
 import java.time.LocalDateTime;
 

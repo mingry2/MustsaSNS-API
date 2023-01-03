@@ -3,7 +3,6 @@ package com.mutsasns.finalproject_kimmingyeong.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinRequest;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinResponse;
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.login.UserLoginRequest;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
 import com.mutsasns.finalproject_kimmingyeong.service.UserService;
@@ -35,9 +34,11 @@ class UserControllerTest {
     @Autowired
     ObjectMapper objectMapper;
     UserJoinRequest userJoinRequest;
+    UserJoinResponse userJoinResponse;
     @BeforeEach
     void setUP(){
         userJoinRequest = new UserJoinRequest("mingyeong", "kmk1234");
+        userJoinResponse = new UserJoinResponse(1L, "mingyeong");
     }
 
     @Nested
@@ -49,13 +50,15 @@ class UserControllerTest {
 
             when(userService.join(any(), any()))
                     .thenReturn(mock(UserJoinResponse.class));
+//                    .thenReturn(userJoinResponse);
 
             mockMvc.perform(post("/api/v1/users/join")
                             .with(csrf())
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsBytes(userJoinRequest)))
                     .andDo(print())
-                    .andExpect(status().isOk());
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.resultCode").value("SUCCESS"));
         }
 
         @Test
@@ -133,12 +136,5 @@ class UserControllerTest {
         }
 
     }
-
-
-
-
-
-
-
 
 }

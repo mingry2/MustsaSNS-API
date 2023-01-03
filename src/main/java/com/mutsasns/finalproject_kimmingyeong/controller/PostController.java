@@ -1,7 +1,10 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.CommentCreateRequest;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.CommentCreateResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.*;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
+import com.mutsasns.finalproject_kimmingyeong.service.CommentService;
 import com.mutsasns.finalproject_kimmingyeong.service.PostService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -67,4 +70,5 @@ public class PostController {
                 .build();
         return Response.success(postDeletedResponse);
     }
+
 }

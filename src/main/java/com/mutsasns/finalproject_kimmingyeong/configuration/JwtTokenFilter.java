@@ -1,7 +1,5 @@
 package com.mutsasns.finalproject_kimmingyeong.configuration;
 
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.ErrorResponse;
-import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
 import com.mutsasns.finalproject_kimmingyeong.service.UserService;
 import com.mutsasns.finalproject_kimmingyeong.utils.JwtTokenUtil;
@@ -13,7 +11,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
