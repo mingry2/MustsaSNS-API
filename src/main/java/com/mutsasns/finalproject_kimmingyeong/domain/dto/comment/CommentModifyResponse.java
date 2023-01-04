@@ -1,8 +1,10 @@
 package com.mutsasns.finalproject_kimmingyeong.domain.dto.comment;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.*;
-import lombok.extern.slf4j.Slf4j;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +12,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Data
-public class CommentCreateResponse {
+public class CommentModifyResponse {
     private Long commentId;
     private String comment;
     private String userName;
@@ -18,5 +20,8 @@ public class CommentCreateResponse {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createAt;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss", timezone = "Asia/Seoul")
+    private LocalDateTime lastModifiedAt;
 
 }

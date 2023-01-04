@@ -1,8 +1,6 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.CommentListResponse;
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.CommentCreateRequest;
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.CommentCreateResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.*;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
 import com.mutsasns.finalproject_kimmingyeong.service.CommentService;
 import lombok.Data;
@@ -38,5 +36,12 @@ public class CommentController {
     public Response<Page<CommentListResponse>> listComment(@PathVariable Long postId, @PageableDefault(size = 10) @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable){
         Page<CommentListResponse> list = commentService.getAll(postId, pageable);
         return Response.success(list);
+    }
+
+    // 댓글 수정
+    @PostMapping("/{postId}/comments/{id}")
+    public Response<CommentModifyResponse> modifyComment(@PathVariable Long postId, @PathVariable Long id, @RequestBody CommentModifyRequest commentModifyRequest, Authentication authentication){
+        CommentModifyResponse commentModifyResponse = commentService.modify(postId, id, commentModifyRequest, authentication.getName());
+        return Response.success(commentModifyResponse);
     }
 }
