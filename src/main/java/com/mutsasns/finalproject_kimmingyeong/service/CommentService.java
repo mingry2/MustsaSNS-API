@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.Objects;
 
 @Service
@@ -82,5 +81,37 @@ public class CommentService {
         Comment savedComment = commentRepository.saveAndFlush(comment);
 
         return savedComment.toModifyResponse();
+    }
+
+    // 댓글 삭제
+    public CommentDeleteResponse delete(Long postsId, Long id, String userName) {
+        // 게시물이 존재하지 않는 경우
+        Post post = postRepository.findById(postsId)
+                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
+
+        // 댓글이 존재하지 않는 경우
+        Comment comment = commentRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.COMMENT_NOT_FOUND, ErrorCode.COMMENT_NOT_FOUND.getMessage()));
+
+        // 댓글 작성자가 아닌 경우
+        User user = userRepository.findByUserName(userName)
+                .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
+
+        Long userId = user.getUserId();
+
+        if (!Objects.equals(comment.getUser().getUserId(), userId)){
+            throw new AppException(ErrorCode.INVALID_PERMISSION, ErrorCode.INVALID_PERMISSION.getMessage());
+        }
+
+        // 댓글 삭제
+        commentRepository.deleteById(comment.getCommentId());
+
+        log.debug("comment.getCommentId : {}", comment.getCommentId());
+        log.debug("postsId : {}", postsId);
+
+        return CommentDeleteResponse.builder()
+                .message("포스트 삭제 완료")
+                .id(postsId)
+                .build();
     }
 }
