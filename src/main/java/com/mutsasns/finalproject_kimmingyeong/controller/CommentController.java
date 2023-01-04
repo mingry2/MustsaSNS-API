@@ -41,7 +41,16 @@ public class CommentController {
     // 댓글 수정
     @PutMapping("/{postId}/comments/{id}")
     public Response<CommentModifyResponse> modifyComment(@PathVariable Long postId, @PathVariable Long id, @RequestBody CommentModifyRequest commentModifyRequest, Authentication authentication){
+        log.debug("postsId : {} id : {} commentModifyRequest.getComment : {} authentication.getName : {}", postId, id, commentModifyRequest.getComment(), authentication.getName());
         CommentModifyResponse commentModifyResponse = commentService.modify(postId, id, commentModifyRequest, authentication.getName());
         return Response.success(commentModifyResponse);
+    }
+
+    // 댓글 삭제
+    @DeleteMapping("/{postsId}/comments/{id}")
+    public Response<CommentDeleteResponse> deleteComment(@PathVariable Long postsId, @PathVariable Long id, Authentication authentication){
+        log.debug("postsId : {} id : {} authentication.getName : {}", postsId, id, authentication.getName());
+        CommentDeleteResponse commentDeleteResponse = commentService.delete(postsId, id, authentication.getName());
+        return Response.success(commentDeleteResponse);
     }
 }

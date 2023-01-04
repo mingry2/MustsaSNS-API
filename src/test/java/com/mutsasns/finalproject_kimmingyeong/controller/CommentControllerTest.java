@@ -69,24 +69,5 @@ class CommentControllerTest {
                 .andExpect(jsonPath("$.result.postId").value(1L));
     }
 
-//    @Test
-//    @DisplayName("포스트의 댓글 모두 조회")
-//    @WithMockUser
-//    void list() throws Exception {
-//
-//        mockMvc.perform(get("/api/v1/posts/1/comments")
-//                        .param("page", "0")
-//                        .param("size", "3")
-//                        .param("sort", "createdAt,desc"))
-//                .andExpect(status().isOk());
-//
-//        ArgumentCaptor<Pageable> pageableArgumentCaptor = ArgumentCaptor.forClass(Pageable.class);
-//        verify(commentService).getAll(1L, pageableArgumentCaptor.capture());
-//        PageRequest pageRequest = (PageRequest) pageableArgumentCaptor.getValue();
-//
-//        assertEquals(0, pageRequest.getPageNumber());
-//        assertEquals(3, pageRequest.getPageSize());
-//        assertEquals(Sort.by("createdAt", "desc"), pageRequest.withSort(Sort.by("createdAt","desc")).getSort());
-//    }
 
 }
