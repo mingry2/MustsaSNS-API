@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @javax.persistence.Entity
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -34,6 +33,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Comment> comment = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Like> Like = new ArrayList<>();
 
 
 }

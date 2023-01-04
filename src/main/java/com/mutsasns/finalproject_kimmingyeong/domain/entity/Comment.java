@@ -3,6 +3,8 @@ package com.mutsasns.finalproject_kimmingyeong.domain.entity;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.CommentCreateResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.CommentModifyResponse;
 import lombok.*;
+import org.hibernate.annotations.Where;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -11,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Data
+@Where(clause = "deleted_at is NULL")
 public class Comment extends BaseEntity{
 
     @Id
@@ -26,6 +29,9 @@ public class Comment extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;
+
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 
     public CommentCreateResponse toCreateResponse(){
         return CommentCreateResponse.builder()

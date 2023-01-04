@@ -1,7 +1,6 @@
 package com.mutsasns.finalproject_kimmingyeong.domain.entity;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +8,6 @@ import java.util.List;
 @javax.persistence.Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Builder
 @Data
 public class Post extends BaseEntity {
@@ -26,5 +24,8 @@ public class Post extends BaseEntity {
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<Comment> comment = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    private List<Like> like = new ArrayList<>();
 
 }
