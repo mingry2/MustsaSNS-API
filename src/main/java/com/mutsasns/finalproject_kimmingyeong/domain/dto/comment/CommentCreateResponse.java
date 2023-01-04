@@ -8,10 +8,8 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Builder
 @Data
-@Slf4j
 public class CommentCreateResponse {
     private Long commentId;
     private String comment;

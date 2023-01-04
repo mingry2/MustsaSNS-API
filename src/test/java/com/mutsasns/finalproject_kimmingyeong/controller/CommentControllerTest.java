@@ -7,18 +7,22 @@ import com.mutsasns.finalproject_kimmingyeong.service.CommentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDateTime;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -64,5 +68,25 @@ class CommentControllerTest {
                 .andExpect(jsonPath("$.result.userName").value("mingyeong"))
                 .andExpect(jsonPath("$.result.postId").value(1L));
     }
+
+//    @Test
+//    @DisplayName("포스트의 댓글 모두 조회")
+//    @WithMockUser
+//    void list() throws Exception {
+//
+//        mockMvc.perform(get("/api/v1/posts/1/comments")
+//                        .param("page", "0")
+//                        .param("size", "3")
+//                        .param("sort", "createdAt,desc"))
+//                .andExpect(status().isOk());
+//
+//        ArgumentCaptor<Pageable> pageableArgumentCaptor = ArgumentCaptor.forClass(Pageable.class);
+//        verify(commentService).getAll(1L, pageableArgumentCaptor.capture());
+//        PageRequest pageRequest = (PageRequest) pageableArgumentCaptor.getValue();
+//
+//        assertEquals(0, pageRequest.getPageNumber());
+//        assertEquals(3, pageRequest.getPageSize());
+//        assertEquals(Sort.by("createdAt", "desc"), pageRequest.withSort(Sort.by("createdAt","desc")).getSort());
+//    }
 
 }
