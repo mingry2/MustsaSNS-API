@@ -1,6 +1,11 @@
 package com.mutsasns.finalproject_kimmingyeong.domain.entity;
 
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
+import org.springframework.data.annotation.CreatedDate;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -11,7 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Data
-public class User {
+@Where(clause = "remove_at is NULL")
+public class User extends UserBaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,14 +25,13 @@ public class User {
     private Long userId;
 
     private String userName;
-    private LocalDateTime updateAt;
+    private String password;
 
     @Enumerated(EnumType.STRING)
-    private UserRole role;
+    private UserRole role; // 회원 등급 -> 구현예정
 
-    private LocalDateTime removeAt;
-    private LocalDateTime registeredAt;
-    private String password;
+    @Column(name = "remove_at")
+    private LocalDateTime removeAt; // 삭제된 시간 -> 회원 탈퇴 구현 시 사용
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Post> post = new ArrayList<>();
