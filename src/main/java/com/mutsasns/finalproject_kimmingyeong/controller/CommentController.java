@@ -39,7 +39,7 @@ public class CommentController {
     }
 
     // 댓글 수정
-    @PostMapping("/{postId}/comments/{id}")
+    @PutMapping("/{postId}/comments/{id}")
     public Response<CommentModifyResponse> modifyComment(@PathVariable Long postId, @PathVariable Long id, @RequestBody CommentModifyRequest commentModifyRequest, Authentication authentication){
         CommentModifyResponse commentModifyResponse = commentService.modify(postId, id, commentModifyRequest, authentication.getName());
         return Response.success(commentModifyResponse);
