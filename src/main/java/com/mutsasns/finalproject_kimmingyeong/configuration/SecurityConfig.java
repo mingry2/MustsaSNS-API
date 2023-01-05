@@ -1,6 +1,5 @@
 package com.mutsasns.finalproject_kimmingyeong.configuration;
 
-import com.mutsasns.finalproject_kimmingyeong.service.PostService;
 import com.mutsasns.finalproject_kimmingyeong.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,6 +34,8 @@ public class SecurityConfig {
                 .antMatchers(HttpMethod.PUT, "/api/**").authenticated()
                 .antMatchers(HttpMethod.DELETE, "/api/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/v1/posts/{postId}/likes").authenticated()
+                .antMatchers(HttpMethod.GET, "/alarms").authenticated()
+                .antMatchers(HttpMethod.GET, "/api/v1/posts/my").authenticated()
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)

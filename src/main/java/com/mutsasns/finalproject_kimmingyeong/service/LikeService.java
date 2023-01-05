@@ -1,17 +1,15 @@
 package com.mutsasns.finalproject_kimmingyeong.service;
 
-import com.mutsasns.finalproject_kimmingyeong.domain.entity.Like;
-import com.mutsasns.finalproject_kimmingyeong.domain.entity.Post;
-import com.mutsasns.finalproject_kimmingyeong.domain.entity.User;
+import com.mutsasns.finalproject_kimmingyeong.domain.entity.*;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
+import com.mutsasns.finalproject_kimmingyeong.repository.AlarmRepository;
 import com.mutsasns.finalproject_kimmingyeong.repository.LikeRepository;
 import com.mutsasns.finalproject_kimmingyeong.repository.PostRepository;
 import com.mutsasns.finalproject_kimmingyeong.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,6 +20,7 @@ public class LikeService {
     private final LikeRepository likeRepository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final AlarmRepository alarmRepository;
 
     // 좋아요 누르기
     public boolean addLike(Long postId, String userName) {
@@ -39,8 +38,12 @@ public class LikeService {
 
         if (optionalLike.isPresent()){ // like가 존재한다면,
             likeRepository.delete(optionalLike.get()); // like를 삭제한다.
+
         }else { // like가 존재하지 않는다면,
             likeRepository.save(Like.addLike(user, post)); // like를 저장한다.
+            alarmRepository.save(Alarm.addAlarm(AlarmType.NEW_LIKE_ON_POST, user, post)); // 알람 저장
+
+            return true;
         }
 
         return true;

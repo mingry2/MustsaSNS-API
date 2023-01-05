@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.domain.dto.comment;
+package com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.list;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.Comment;
@@ -23,7 +23,7 @@ public class CommentListResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
 
-    // Comment -> Page<CommentListResponses>
+    // Page<Comment> -> Page<CommentListResponses>
     public static Page<CommentListResponse> toResponse(Page<Comment> commentList) {
         Page<CommentListResponse> commentListResponses = commentList.map(comment1 -> CommentListResponse.builder()
                 .id(comment1.getCommentId())
@@ -32,6 +32,7 @@ public class CommentListResponse {
                 .postId(comment1.getPost().getPostId())
                 .createdAt(comment1.getCreatedAt())
                 .build());
+
         return commentListResponses;
     }
 }

@@ -21,7 +21,8 @@ public class UserService {
 
     @Value("${jwt.token.secret}")
     private String secretKey;
-    private Long expiredTimeMs = 1000 * 60 * 60L; // 1시간
+//    private Long expiredTimeMs = 1000 * 60 * 60L; // 1시간
+    private Long expiredTimeMs = 1 * 1000 * 60 * 60L * 24; // 하루
 
     // 회원가입
     public UserJoinResponse join(String userName, String password) {

@@ -1,15 +1,14 @@
 package com.mutsasns.finalproject_kimmingyeong.domain.entity;
 
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.CommentCreateResponse;
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.CommentModifyResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.modify.CommentModifyResponse;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@javax.persistence.Entity
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

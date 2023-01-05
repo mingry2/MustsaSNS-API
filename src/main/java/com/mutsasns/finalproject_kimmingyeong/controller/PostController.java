@@ -1,10 +1,7 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.CommentCreateRequest;
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.CommentCreateResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.*;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
-import com.mutsasns.finalproject_kimmingyeong.service.CommentService;
 import com.mutsasns.finalproject_kimmingyeong.service.PostService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -69,6 +66,14 @@ public class PostController {
                 .postId(postId)
                 .build();
         return Response.success(postDeletedResponse);
+    }
+
+    // 마이피드 조회
+    @GetMapping("/my")
+    public Response<Page<PostListResponse>> myFeed(Authentication authentication, @PageableDefault(size = 20) @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable){
+        Page<PostListResponse> myFeed = postService.myFeedAll(authentication.getName(), pageable);
+        return Response.success(myFeed);
+
     }
 
 }

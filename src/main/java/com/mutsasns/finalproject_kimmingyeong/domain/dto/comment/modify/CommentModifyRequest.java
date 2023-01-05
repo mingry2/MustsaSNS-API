@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.domain.dto.comment;
+package com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.modify;
 
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.Comment;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.Post;
@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 public class CommentModifyRequest {
     private String comment;
 
+    // CommentModifyRequest -> Comment
     public Comment toEntity(User user, Post post) {
         return Comment.builder()
                 .comment(this.comment)

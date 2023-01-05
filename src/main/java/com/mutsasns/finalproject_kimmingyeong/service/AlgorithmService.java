@@ -1,6 +1,5 @@
 package com.mutsasns.finalproject_kimmingyeong.service;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service

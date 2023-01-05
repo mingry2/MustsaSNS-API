@@ -1,6 +1,11 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.*;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateRequest;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.delete.CommentDeleteResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.list.CommentListResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.modify.CommentModifyRequest;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.modify.CommentModifyResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
 import com.mutsasns.finalproject_kimmingyeong.service.CommentService;
 import lombok.Data;

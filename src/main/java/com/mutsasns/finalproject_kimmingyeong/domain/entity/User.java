@@ -2,16 +2,13 @@ package com.mutsasns.finalproject_kimmingyeong.domain.entity;
 
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.annotations.Where;
-import org.springframework.data.annotation.CreatedDate;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@javax.persistence.Entity
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -41,7 +38,10 @@ public class User extends UserBaseEntity{
     private List<Comment> comment = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Like> Like = new ArrayList<>();
+    private List<Like> like = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Alarm> alarm = new ArrayList<>();
 
 
 }
