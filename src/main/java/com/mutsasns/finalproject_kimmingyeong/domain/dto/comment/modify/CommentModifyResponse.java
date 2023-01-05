@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.domain.dto.comment;
+package com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.modify;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;

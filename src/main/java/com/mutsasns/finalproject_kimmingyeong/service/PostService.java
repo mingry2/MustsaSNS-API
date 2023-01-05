@@ -123,4 +123,19 @@ public class PostService {
 
         return true;
     }
+
+    // 마이피드 조회
+    public Page<PostListResponse> myFeedAll(String userName, Pageable pageable) {
+
+        // 해당 userName으로 작성한 포스트가 없을 경우
+        User user = userRepository.findByUserName(userName)
+                .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
+
+        // userName으로 조회되는 포스트 모두 조회
+        Page<Post> userPosts = postRepository.findAllByUser(user, pageable);
+        Page<PostListResponse> postListResponses = PostListResponse.toResponse(userPosts);
+
+        return postListResponses;
+
+    }
 }

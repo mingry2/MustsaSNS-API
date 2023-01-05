@@ -28,7 +28,7 @@ public class PostListResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime lastModifiedAt;
 
-    // Post -> Page<PostListResponse>
+    // Page<Post> -> Page<PostListResponse>
     public static Page<PostListResponse> toResponse(Page<Post> postList) {
         Page<PostListResponse> postListResponses = postList.map(post -> PostListResponse.builder()
                 .id(post.getPostId())
@@ -38,6 +38,7 @@ public class PostListResponse {
                 .createdAt(post.getCreatedAt())
                 .lastModifiedAt(post.getLastModifiedAt())
                 .build());
+
         return postListResponses;
     }
 

@@ -1,11 +1,15 @@
 package com.mutsasns.finalproject_kimmingyeong.service;
 
-import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.*;
-import com.mutsasns.finalproject_kimmingyeong.domain.entity.Comment;
-import com.mutsasns.finalproject_kimmingyeong.domain.entity.Post;
-import com.mutsasns.finalproject_kimmingyeong.domain.entity.User;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateRequest;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.delete.CommentDeleteResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.list.CommentListResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.modify.CommentModifyRequest;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.modify.CommentModifyResponse;
+import com.mutsasns.finalproject_kimmingyeong.domain.entity.*;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
+import com.mutsasns.finalproject_kimmingyeong.repository.AlarmRepository;
 import com.mutsasns.finalproject_kimmingyeong.repository.CommentRepository;
 import com.mutsasns.finalproject_kimmingyeong.repository.PostRepository;
 import com.mutsasns.finalproject_kimmingyeong.repository.UserRepository;
@@ -24,6 +28,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final AlarmRepository alarmRepository;
 
     // 댓글 등록
     public CommentCreateResponse create(Long postId, CommentCreateRequest commentCreateRequest, String userName) {
@@ -39,6 +44,9 @@ public class CommentService {
 
         // 댓글 등록 완료
         Comment comment = commentRepository.save(commentCreateRequest.toEntity(user, post));
+
+        // 알람 저장
+        alarmRepository.save(Alarm.addAlarm(AlarmType.NEW_COMMENT_ON_POST, user, post));
 
         return comment.toCreateResponse();
     }

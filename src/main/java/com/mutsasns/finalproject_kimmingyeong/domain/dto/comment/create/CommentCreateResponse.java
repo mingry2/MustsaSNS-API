@@ -1,8 +1,7 @@
-package com.mutsasns.finalproject_kimmingyeong.domain.dto.comment;
+package com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-
 import java.time.LocalDateTime;
 
 @AllArgsConstructor

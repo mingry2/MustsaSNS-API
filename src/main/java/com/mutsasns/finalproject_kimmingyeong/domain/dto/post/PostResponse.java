@@ -1,6 +1,5 @@
 package com.mutsasns.finalproject_kimmingyeong.domain.dto.post;
 
-import com.mutsasns.finalproject_kimmingyeong.domain.entity.Post;
 import lombok.*;
 
 @AllArgsConstructor

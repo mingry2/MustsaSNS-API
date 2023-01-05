@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.domain.dto.comment;
+package com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.delete;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
