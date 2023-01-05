@@ -17,6 +17,7 @@ import java.util.List;
 @Builder
 @Data
 @Where(clause = "remove_at is NULL")
+@SQLDelete(sql = "UPDATE user SET remove_at = current_timestamp WHERE user_id = ?")
 public class User extends UserBaseEntity{
 
     @Id
