@@ -7,12 +7,13 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "\"like\"")
+@Table(name = "likes")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
 @Where(clause = "deleted_at is NULL")
+@SQLDelete(sql = "UPDATE likes SET deleted_at = current_timestamp WHERE like_id = ?")
 public class Like extends BaseEntity{
 
     @Id

@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 @Data
 @Where(clause = "deleted_at is NULL")
+@SQLDelete(sql = "UPDATE comment SET deleted_at = current_timestamp WHERE comment_id = ?")
 public class Comment extends BaseEntity{
 
     @Id
@@ -46,7 +47,7 @@ public class Comment extends BaseEntity{
 
     public CommentModifyResponse toModifyResponse(){
         return CommentModifyResponse.builder()
-                .commentId(this.getCommentId())
+                .id(this.getCommentId())
                 .comment(this.getComment())
                 .userName(this.getUser().getUserName())
                 .postId(this.getPost().getPostId())
