@@ -20,6 +20,7 @@ public class SwaggerConfiguration {
         return new Docket(DocumentationType.OAS_30)
                 .securityContexts(Arrays.asList(securityContext()))
                 .securitySchemes(Arrays.asList(apiKey()))
+//                .useDefaultResponseMessages(false) // 기본 응답 메세지 삭제 -> @ApiResponse 로 설명하지 않은 401, 403, 404 응답들이 사라짐.
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
