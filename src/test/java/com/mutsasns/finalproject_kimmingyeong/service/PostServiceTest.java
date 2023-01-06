@@ -37,7 +37,6 @@ class PostServiceTest {
             .userName(userName)
             .password(password)
             .role(UserRole.USER)
-            .registeredAt(LocalDateTime.now())
             .build();
     Post post = Post.builder()
             .postId(1L)
@@ -108,7 +107,6 @@ class PostServiceTest {
                     .userName(userName1)
                     .password(password1)
                     .role(UserRole.USER)
-                    .registeredAt(LocalDateTime.now())
                     .build();
 
             when(userRepository.findByUserName(user.getUserName()))

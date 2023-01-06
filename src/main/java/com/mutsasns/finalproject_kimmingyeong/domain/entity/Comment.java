@@ -40,7 +40,7 @@ public class Comment extends BaseEntity{
                 .comment(this.getComment())
                 .userName(this.getUser().getUserName())
                 .postId(this.getPost().getPostId())
-                .createAt(getCreatedAt())
+                .createdAt(getCreatedAt())
                 .build();
     }
 
@@ -50,7 +50,7 @@ public class Comment extends BaseEntity{
                 .comment(this.getComment())
                 .userName(this.getUser().getUserName())
                 .postId(this.getPost().getPostId())
-                .createAt(getCreatedAt())
+                .createdAt(getCreatedAt())
                 .lastModifiedAt(getLastModifiedAt())
                 .build();
     }
