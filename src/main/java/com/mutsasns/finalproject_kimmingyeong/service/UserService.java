@@ -2,6 +2,7 @@ package com.mutsasns.finalproject_kimmingyeong.service;
 
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.User;
+import com.mutsasns.finalproject_kimmingyeong.domain.entity.UserRole;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
 import com.mutsasns.finalproject_kimmingyeong.repository.UserRepository;
@@ -36,6 +37,7 @@ public class UserService {
         User user = User.builder()
                 .userName(userName)
                 .password(encoder.encode(password))
+                .role(UserRole.USER)
                 .build();
         userRepository.save(user);
         log.debug("User: {}", user);
@@ -61,5 +63,10 @@ public class UserService {
         String token = JwtTokenUtil.createToken(findUser.getUserName(), secretKey, expiredTimeMs);
 
         return token;
+    }
+
+    public User getUserByUserName(String userName) {
+        return userRepository.findByUserName(userName)
+                .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
     }
 }
