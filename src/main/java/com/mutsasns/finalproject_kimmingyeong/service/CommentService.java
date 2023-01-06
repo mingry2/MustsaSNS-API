@@ -86,7 +86,7 @@ public class CommentService {
 
         // 수정한 댓글 DB 저장
         comment.setComment(commentModifyRequest.getComment());
-        Comment savedComment = commentRepository.saveAndFlush(comment);
+        Comment savedComment = commentRepository.save(comment);
 
         return savedComment.toModifyResponse();
     }

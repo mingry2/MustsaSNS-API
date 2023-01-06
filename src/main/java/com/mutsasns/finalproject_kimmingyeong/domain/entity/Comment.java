@@ -36,7 +36,7 @@ public class Comment extends BaseEntity{
 
     public CommentCreateResponse toCreateResponse(){
         return CommentCreateResponse.builder()
-                .commentId(this.getCommentId())
+                .id(this.getCommentId())
                 .comment(this.getComment())
                 .userName(this.getUser().getUserName())
                 .postId(this.getPost().getPostId())
