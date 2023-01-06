@@ -26,7 +26,7 @@ public class User extends UserBaseEntity{
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private UserRole role; // 회원 등급 -> 구현예정
+    private UserRole role;
 
     @Column(name = "remove_at")
     private LocalDateTime removeAt; // 삭제된 시간 -> 회원 탈퇴 구현 시 사용

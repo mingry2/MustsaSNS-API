@@ -1,5 +1,6 @@
 package com.mutsasns.finalproject_kimmingyeong.configuration;
 
+import com.mutsasns.finalproject_kimmingyeong.domain.entity.User;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
 import com.mutsasns.finalproject_kimmingyeong.service.UserService;
 import com.mutsasns.finalproject_kimmingyeong.utils.JwtTokenUtil;
@@ -52,8 +53,12 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         String userName = JwtTokenUtil.getUserName(token, secretKey);
         log.info("userName : {}", userName);
 
+        // UserDetail
+        User user = userService.getUserByUserName(userName);
+        log.debug("userRole: {}", user.getRole());
+
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(userName, null, List.of(new SimpleGrantedAuthority("USER")));
+                new UsernamePasswordAuthenticationToken(user.getUserName(), null, List.of(new SimpleGrantedAuthority(user.getRole().name())));
 
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
