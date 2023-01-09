@@ -15,7 +15,7 @@ public class HelloController {
     // cicd 체크용
     @GetMapping
     public ResponseEntity<String> hello() {
-        return ResponseEntity.ok().body("다시");
+        return ResponseEntity.ok().body("김민경");
     }
 
     // 20221229 실습 -> 자릿수 합 구하기
