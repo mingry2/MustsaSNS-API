@@ -1,6 +1,7 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mutsasns.finalproject_kimmingyeong.controller.restcontroller.LikeRestController;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
 import com.mutsasns.finalproject_kimmingyeong.service.LikeService;
@@ -20,8 +21,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(LikeController.class)
-class LikeControllerTest {
+@WebMvcTest(LikeRestController.class)
+class LikeRestControllerTest {
     @Autowired
     MockMvc mockMvc;
     @MockBean

@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.controller;
+package com.mutsasns.finalproject_kimmingyeong.controller.restcontroller;
 
 import com.mutsasns.finalproject_kimmingyeong.service.AlgorithmService;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/hello")
 @RequiredArgsConstructor
-public class HelloController {
+public class HelloRestController {
 
     private final AlgorithmService algorithmService;
 

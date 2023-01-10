@@ -1,6 +1,7 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mutsasns.finalproject_kimmingyeong.controller.restcontroller.CommentRestController;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateRequest;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.delete.CommentDeleteResponse;
@@ -29,8 +30,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(CommentController.class)
-class CommentControllerTest {
+@WebMvcTest(CommentRestController.class)
+class CommentRestControllerTest {
 
     @Autowired
     MockMvc mockMvc;

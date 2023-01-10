@@ -118,8 +118,8 @@ public class CommentService {
         log.debug("postsId : {}", postsId);
 
         return CommentDeleteResponse.builder()
-                .message("포스트 삭제 완료")
-                .id(postsId)
+                .message("댓글 삭제 완료")
+                .id(comment.getCommentId())
                 .build();
     }
 }

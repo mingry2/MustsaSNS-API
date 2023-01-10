@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.controller;
+package com.mutsasns.finalproject_kimmingyeong.controller.restcontroller;
 
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.*;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
@@ -20,7 +20,7 @@ import static com.sun.tools.attach.VirtualMachine.list;
 @RequiredArgsConstructor
 @Slf4j
 @Data
-public class PostController {
+public class PostRestController {
 
     private final PostService postService;
 

@@ -1,5 +1,6 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
+import com.mutsasns.finalproject_kimmingyeong.controller.restcontroller.HelloRestController;
 import com.mutsasns.finalproject_kimmingyeong.service.AlgorithmService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,11 +14,10 @@ import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(HelloController.class)
-class HelloControllerTest {
+@WebMvcTest(HelloRestController.class)
+class HelloRestControllerTest {
     @Autowired
     MockMvc mockMvc;
     @MockBean
