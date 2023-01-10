@@ -4,10 +4,10 @@ import com.mutsasns.finalproject_kimmingyeong.domain.dto.alarm.AlarmContainer;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.alarm.AlarmResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
 import com.mutsasns.finalproject_kimmingyeong.service.AlarmService;
+import io.swagger.annotations.ApiOperation;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -29,6 +29,9 @@ public class AlarmRestController {
     private final AlarmService alarmService;
 
     // 받은 알람 조회
+    @ApiOperation(
+            value = "받은 알람 조회"
+            , notes = "NEW_COMMENT_ON_POST / NEW_LIKE_ON_POST 받은 알람 조회")
     @GetMapping("")
     public Response<AlarmContainer> alarm(Authentication authentication, @PageableDefault(size = 20) @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable){
         List<AlarmResponse> list = alarmService.listAlarm(authentication.getName(), pageable);
