@@ -9,8 +9,6 @@ import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
 import com.mutsasns.finalproject_kimmingyeong.repository.PostRepository;
 import com.mutsasns.finalproject_kimmingyeong.repository.UserRepository;
 import org.junit.jupiter.api.*;
-
-import java.time.LocalDateTime;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
