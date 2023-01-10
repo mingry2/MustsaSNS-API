@@ -37,6 +37,7 @@ public class CommentRestController {
     }
 
     // 댓글 조회
+
     @GetMapping("/{postId}/comments")
     public Response<Page<CommentListResponse>> listComment(@PathVariable Long postId, @PageableDefault(size = 10) @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable){
         Page<CommentListResponse> list = commentService.getAll(postId, pageable);
