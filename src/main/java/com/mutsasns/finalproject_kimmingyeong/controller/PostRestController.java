@@ -16,7 +16,6 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
-
 import static com.sun.tools.attach.VirtualMachine.list;
 
 @RestController
@@ -109,11 +108,13 @@ public class PostRestController {
     }
 
     // 마이피드 조회
+    @ApiOperation(
+            value = "마이피드 조회"
+            , notes = "마이피드 조회 - 인증 된 사용자가 작성한 포스트 리스트 조회하는 기능")
     @GetMapping("/my")
     public Response<Page<PostListResponse>> myFeed(@ApiIgnore Authentication authentication, @ApiIgnore @PageableDefault(size = 20) @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable){
         Page<PostListResponse> myFeed = postService.myFeedAll(authentication.getName(), pageable);
         return Response.success(myFeed);
-
     }
 
 }
