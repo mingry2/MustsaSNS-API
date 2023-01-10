@@ -1,8 +1,25 @@
-# Mutsa Final Project
+<div align="center">
+    ![header](https://capsule-render.vercel.app/api?type=wave&color=auto&height=300&section=header&text=mutsaSNS&%20render&fontSize=90)
+</div>
+<div align="center">
+    <h1>📢 Tech Stack </h1>
+</div>
+<div align="center">
+    <img src="https://img.shields.io/badge/Java-007396?style=flat&logo=Java&logoColor=white" />
+    <img src="https://img.shields.io/badge/GitLab-FC6D26?style=flat&logo=GitLab&logoColor=white" /><br>
+    <img src="https://img.shields.io/badge/spring-6DB33F?style=flat&logo=spring&logoColor=white" />
+    <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat&logo=springboot&logoColor=white" />
+    <img src="https://img.shields.io/badge/SpringSecurity-6DB33F?style=flat&logo=springsecurity&logoColor=white" /><br>
+    <img src="https://img.shields.io/badge/Docker-2496ED?style=flat&logo=Docker&logoColor=white" />
+    <img src="https://img.shields.io/badge/MySQL-4479A1?style=flat&logo=MySQL&logoColor=white" /><br>
+    <img src="https://img.shields.io/badge/AmazonAWS-232F3E?style=flat&logo=AmazonAWS&logoColor=white" />
+    <img src="https://img.shields.io/badge/JUnit5-25A162?style=flat&logo=JUnit5&logoColor=white" />
+</div>
+<br>
 
-# 멋사스네스(MustsaSNS)
+# Mutsa Final Project 🌈 멋사스네스(MustsaSNS)
 
-## 프로젝트 개요
+## 📚 프로젝트 개요
 1️⃣ 로그인   
 2️⃣ 회원가입   
 3️⃣ 글 작성/수정/삭제/리스트    
@@ -13,7 +30,7 @@
 
 1️⃣ ~ 7️⃣ 기능들을 사용하여 회원들끼리 소통하는 SNS 애플리케이션
 
-## 개발환경
+## 📃 개발환경
 - 에디터 : Intellij Ultimate
 - 개발 툴 : SpringBoot 2.7.5
 - 자바 : JAVA 11
@@ -23,22 +40,21 @@
 - 데이터베이스 : MySql 8.0
 - 필수 라이브러리 : SpringBoot Web, MySQL, Spring Data JPA, Lombok, Spring Security
 
-## 기능
+## 🛠 기능
 - Swagger
 - AWS EC2에 Docker 배포
 - Gitlab CI & Crontab CD
 
-## Swagger
-주소    
-: http://ec2-52-79-78-160.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/
+## 📢 Swagger
+http://ec2-52-79-78-160.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/
 
-## ERD
+## 📊 ERD
+![](final_project_erd.png)
 
+## 📊 아키텍쳐
+![](img.png)
 
-## 아키텍쳐
-
-
-## EndPoint
+## 📃 EndPoint
 > 회원가입
 `POST /api/v1/users/join`    
 
@@ -80,7 +96,7 @@
 
 
 
-## 기능구현
+## 📃 기능구현
 * 모든 기능의 응답값은 Response로 감싸서 resultCode와 result로 나누어 보여준다.
 ```json
 {
@@ -256,7 +272,6 @@ Pageable ((최신순, 20개씩 표시))
 
 ---
 
-
 ### 댓글 등록/수정/삭제/조회 (url : `/api/v1/posts`)
 * 댓글 작성 : 회원만 가능
 * 댓글 수정/삭제 : 댓글을 작성한 회원만 가능
@@ -284,7 +299,7 @@ Pageable ((최신순, 20개씩 표시))
 }
 ```
 
-> 댓글 수정 `PUT /{postId}/comments/{id}
+> **댓글 수정 `PUT /{postId}/comments/{id}`**
 
 * Request
 ```json
@@ -305,10 +320,10 @@ Pageable ((최신순, 20개씩 표시))
 ```json
 {
 	"resultCode": "SUCCESS",
-	"result":{
-		"message": "댓글 삭제 완료",
-		"id": 4
-		}
+    "result":{
+                "message": "댓글 삭제 완료",
+                "id": 4
+            }
 }
 ```
 
@@ -325,7 +340,7 @@ like를 한번 더 누르면 좋아요 취소
 * Request
 ```json
 {
-	"resultCode":"SUCCESS",
+    "resultCode":"SUCCESS",
     "result": "좋아요를 눌렀습니다."
 }
 ```
@@ -335,7 +350,7 @@ like를 한번 더 누르면 좋아요 취소
 * Response
 ```json
 {
-	"resultCode":"SUCCESS",
+    "resultCode":"SUCCESS",
     "result": 0
 }
 ```
@@ -352,20 +367,20 @@ Pageable 설정 내용은 보이지 않고, content에 감싸져 보여주기
 * Response
 ```json
 {
-	"resultCode":"SUCCESS",
-  "result": {
-	"content":
-	[
-		{
-	      "id": 1,
-	      "alarmType": "NEW_LIKE_ON_POST",
-        "fromUserId": 1,
-        "targetId": 1,
-	      "text": "new like!",
-	      "createdAt": "2022-12-25T14:53:28.209+00:00",
-	  }
-	]
-	}
+    "resultCode":"SUCCESS",
+    "result": {
+        "content":
+        [
+            {
+                "id": 1,
+                "alarmType": "NEW_LIKE_ON_POST",
+                "fromUserId": 1,
+                "targetId": 1,
+                "text": "new like!",
+                "createdAt": "2022-12-25T14:53:28.209+00:00"
+            }
+        ]
+    }
 }
 ```
 
@@ -382,30 +397,32 @@ Pageable 설정 내용은 보이지 않고, content에 감싸져 보여주기
 {
   "resultCode": "SUCCESS",
   "result":{
-    "content":[
-			{
-			"id": 4,
-			"title": "test",
-			"body": "body",
-			"userName": "test",
-			"createdAt": "2022-12-16T16:50:37.515952"
-			}
-		],
-	"pageable":{
-			"sort":{"empty": true, "sorted": false, "unsorted": true }, "offset": 0,…},
-			"last": true,
-			"totalPages": 1,
-			"totalElements": 1,
-			"size": 20,
-			"number": 0,
-			"sort":{
-			"empty": true,
-			"sorted": false,
-			"unsorted": true
-			},
-			"numberOfElements": 1,
-	"first": true,
-	"empty": false
+    "content":
+        [
+            {
+            "id": 4,
+            "title": "test",
+            "body": "body",
+            "userName": "test",
+            "createdAt": "2022-12-16T16:50:37.515952"
+            }
+        ],
+	"pageable":
+        {
+            "sort":{"empty": true, "sorted": false, "unsorted": true }, "offset": 0,…},
+            "last": true,
+            "totalPages": 1,
+            "totalElements": 1,
+            "size": 20,
+            "number": 0,
+            "sort":{
+            "empty": true,
+            "sorted": false,
+            "unsorted": true
+        },
+    "numberOfElements": 1,
+    "first": true,
+    "empty": false
 }
 ```
 
