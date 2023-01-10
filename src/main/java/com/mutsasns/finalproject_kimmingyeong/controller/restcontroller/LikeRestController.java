@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.controller;
+package com.mutsasns.finalproject_kimmingyeong.controller.restcontroller;
 
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.like.LikeAddResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 @Data
-public class LikeController {
+public class LikeRestController {
 
     private final LikeService likeService;
 

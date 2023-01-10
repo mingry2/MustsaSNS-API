@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.controller;
+package com.mutsasns.finalproject_kimmingyeong.controller.restcontroller;
 
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.alarm.AlarmResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @Slf4j
 @Data
-public class AlarmController {
+public class AlarmRestController {
 
     private final AlarmService alarmService;
 

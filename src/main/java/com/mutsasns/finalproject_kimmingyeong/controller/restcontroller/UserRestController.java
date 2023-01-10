@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.controller;
+package com.mutsasns.finalproject_kimmingyeong.controller.restcontroller;
 
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinRequest;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinResponse;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/users")
 @RequiredArgsConstructor
 @Slf4j
-public class UserController {
+public class UserRestController {
 
     private final UserService userService;
 

@@ -1,6 +1,7 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mutsasns.finalproject_kimmingyeong.controller.restcontroller.PostRestController;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostRequest;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostListResponse;
@@ -32,8 +33,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(PostController.class)
-class PostControllerTest {
+@WebMvcTest(PostRestController.class)
+class PostRestControllerTest {
     @Autowired
     MockMvc mockMvc;
     @MockBean

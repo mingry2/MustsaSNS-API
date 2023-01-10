@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.controller;
+package com.mutsasns.finalproject_kimmingyeong.controller.restcontroller;
 
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateRequest;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateResponse;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @Slf4j
 @Data
-public class CommentController {
+public class CommentRestController {
 
     private final CommentService commentService;
 
