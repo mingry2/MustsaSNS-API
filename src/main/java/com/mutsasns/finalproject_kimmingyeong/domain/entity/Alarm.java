@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -37,6 +38,19 @@ public class Alarm extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    // Alarm -> AlarmResponse
+    public AlarmResponse toResponse() {
+        return AlarmResponse.builder()
+                .id(id)
+                .alarmType(alarmType)
+                .fromUserId(fromUserId)
+                .targetId(targetId)
+                .text(alarmType.getAlarmText())
+                .createdAt(getCreatedAt())
+                .build();
+
+    }
 
     // 알람 저장 메소드
     public static Alarm addAlarm(AlarmType alarmType, User user, Post post) {

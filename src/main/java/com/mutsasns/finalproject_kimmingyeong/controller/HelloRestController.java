@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.controller.restcontroller;
+package com.mutsasns.finalproject_kimmingyeong.controller;
 
 import com.mutsasns.finalproject_kimmingyeong.service.AlgorithmService;
 import lombok.RequiredArgsConstructor;

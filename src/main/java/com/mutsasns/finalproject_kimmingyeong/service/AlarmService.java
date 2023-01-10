@@ -1,5 +1,6 @@
 package com.mutsasns.finalproject_kimmingyeong.service;
 
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.alarm.AlarmContainer;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.alarm.AlarmResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.Alarm;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.User;
@@ -13,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -24,17 +26,17 @@ public class AlarmService {
     private final AlarmRepository alarmRepository;
     private final UserRepository userRepository;
 
-    public Page<AlarmResponse> listAlarm(String userName, Pageable pageable) {
+    public List<AlarmResponse> listAlarm(String userName, Pageable pageable) {
 
         // userName이 없는 경우
         User user = userRepository.findByUserName(userName)
                 .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
 
         // userName이 받은 알람 조회
-        Page<Alarm> alarms = alarmRepository.findAllByUser(user, pageable);
-        log.debug("alarms : {} ", alarms);
-        Page<AlarmResponse> alarmResponses = AlarmResponse.toResponse(alarms);
-        log.debug("alarmResponses : {} ", alarmResponses);
+        List<Alarm> alarms = alarmRepository.findAllByUser(user);
+
+        List<AlarmResponse> alarmResponses = alarms.stream().map(alarm -> alarm.toResponse()).collect(Collectors.toList());
+
         return alarmResponses;
     }
 }

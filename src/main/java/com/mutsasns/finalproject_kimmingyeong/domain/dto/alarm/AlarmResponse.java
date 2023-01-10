@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,17 +23,4 @@ public class AlarmResponse {
     private String text;
     private LocalDateTime createdAt;
 
-    // Page<Alarm> -> Page<AlarmResponse>
-    public static Page<AlarmResponse> toResponse(Page<Alarm> alarms) {
-        Page<AlarmResponse> alarmResponses = alarms.map(alarm -> AlarmResponse.builder()
-                .id(alarm.getId())
-                .alarmType(alarm.getAlarmType())
-                .fromUserId(alarm.getFromUserId())
-                .targetId(alarm.getTargetId())
-                .text(alarm.getAlarmType().getAlarmText())
-                .createdAt(alarm.getCreatedAt())
-                .build());
-
-        return alarmResponses;
-    }
 }

@@ -1,5 +1,6 @@
-package com.mutsasns.finalproject_kimmingyeong.controller.restcontroller;
+package com.mutsasns.finalproject_kimmingyeong.controller;
 
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.alarm.AlarmContainer;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.alarm.AlarmResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
 import com.mutsasns.finalproject_kimmingyeong.service.AlarmService;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/alarms")
 @RequiredArgsConstructor
@@ -27,9 +30,9 @@ public class AlarmRestController {
 
     // 받은 알람 조회
     @GetMapping("")
-    public Response<Page<AlarmResponse>> alarm(Authentication authentication, @PageableDefault(size = 20) @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable){
-        Page<AlarmResponse> list = alarmService.listAlarm(authentication.getName(), pageable);
-        return Response.success(list);
+    public Response<AlarmContainer> alarm(Authentication authentication, @PageableDefault(size = 20) @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable){
+        List<AlarmResponse> list = alarmService.listAlarm(authentication.getName(), pageable);
+        return Response.success(new AlarmContainer(list));
 
     }
 }

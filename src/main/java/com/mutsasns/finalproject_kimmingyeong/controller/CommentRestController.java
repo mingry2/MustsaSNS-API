@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.controller.restcontroller;
+package com.mutsasns.finalproject_kimmingyeong.controller;
 
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateRequest;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateResponse;
@@ -37,6 +37,7 @@ public class CommentRestController {
     }
 
     // 댓글 조회
+
     @GetMapping("/{postId}/comments")
     public Response<Page<CommentListResponse>> listComment(@PathVariable Long postId, @PageableDefault(size = 10) @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable){
         Page<CommentListResponse> list = commentService.getAll(postId, pageable);
