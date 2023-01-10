@@ -1,7 +1,6 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mutsasns.finalproject_kimmingyeong.controller.restcontroller.UserRestController;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinRequest;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.join.UserJoinResponse;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;

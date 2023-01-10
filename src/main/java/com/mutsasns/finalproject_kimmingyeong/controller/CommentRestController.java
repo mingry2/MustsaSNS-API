@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.controller.restcontroller;
+package com.mutsasns.finalproject_kimmingyeong.controller;
 
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateRequest;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateResponse;

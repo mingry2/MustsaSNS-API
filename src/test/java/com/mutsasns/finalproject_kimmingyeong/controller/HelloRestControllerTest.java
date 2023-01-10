@@ -1,6 +1,5 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
-import com.mutsasns.finalproject_kimmingyeong.controller.restcontroller.HelloRestController;
 import com.mutsasns.finalproject_kimmingyeong.service.AlgorithmService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

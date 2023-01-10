@@ -1,4 +1,4 @@
-package com.mutsasns.finalproject_kimmingyeong.controller.restcontroller;
+package com.mutsasns.finalproject_kimmingyeong.controller;
 
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.*;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;

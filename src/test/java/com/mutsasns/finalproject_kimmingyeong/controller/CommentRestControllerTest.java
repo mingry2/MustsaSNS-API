@@ -1,7 +1,6 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mutsasns.finalproject_kimmingyeong.controller.restcontroller.CommentRestController;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateRequest;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.create.CommentCreateResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.comment.delete.CommentDeleteResponse;
