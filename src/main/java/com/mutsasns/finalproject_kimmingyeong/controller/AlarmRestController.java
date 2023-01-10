@@ -16,6 +16,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class AlarmRestController {
             value = "받은 알람 조회"
             , notes = "NEW_COMMENT_ON_POST / NEW_LIKE_ON_POST 받은 알람 조회")
     @GetMapping("")
-    public Response<AlarmContainer> alarm(Authentication authentication, @PageableDefault(size = 20) @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable){
+    public Response<AlarmContainer> alarm(@ApiIgnore Authentication authentication, @ApiIgnore @PageableDefault(size = 20) @SortDefault(sort = "createdAt",direction = Sort.Direction.DESC) Pageable pageable){
         List<AlarmResponse> list = alarmService.listAlarm(authentication.getName(), pageable);
         return Response.success(new AlarmContainer(list));
 

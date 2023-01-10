@@ -6,6 +6,7 @@ import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.login.UserLoginReq
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.user.login.UserLoginResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.response.Response;
 import com.mutsasns.finalproject_kimmingyeong.service.UserService;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
