@@ -85,7 +85,7 @@ http://ec2-52-79-78-160.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/
 > 댓글 삭제
 `DELETE /api/v1/posts/{postId}/comments/{id}`    
 
-> 좋아요 누르기    
+> 좋아요 누르기
 `POST /api/v1/posts/{postId}/likes`    
 
 > 좋아요 개수
