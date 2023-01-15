@@ -21,7 +21,8 @@ public class LikeRestController {
 
     private final LikeService likeService;
 
-    // 좋아요 누르기
+    // ----------------------------------------------------------------------------------
+
     @ApiOperation(
             value = "좋아요 누르기"
             , notes = "like 한 번 누르면 1, 한 번 더 누르면 0(soft deletedAt 적용) -> 중복 불가")
@@ -34,14 +35,11 @@ public class LikeRestController {
             , defaultValue = "None")
     @PostMapping("/{postId}/likes")
     public Response<LikeAddResponse> pushLike(@PathVariable Long postId, @ApiIgnore Authentication authentication){
-        likeService.addLike(postId, authentication.getName());
-        return Response.success(LikeAddResponse.builder()
-                                            .message("좋아요를 눌렀습니다.")
-                                            .build());
+        LikeAddResponse likeAddResponse = likeService.addLike(postId, authentication.getName());
+        return Response.success(likeAddResponse);
 
     }
 
-    // 좋아요 개수
     @ApiOperation(
             value = "좋아요 조회"
             , notes = "포스트 좋아요 개수 조회")

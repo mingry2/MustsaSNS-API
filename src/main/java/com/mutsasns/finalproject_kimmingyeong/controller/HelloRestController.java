@@ -13,7 +13,6 @@ public class HelloRestController {
 
     private final AlgorithmService algorithmService;
 
-    // cicd 체크용
     @ApiOperation(
             value = "CICD 체크용"
             , notes = "body([도전 단어])")
@@ -22,7 +21,6 @@ public class HelloRestController {
         return ResponseEntity.ok().body("김민경");
     }
 
-    // 20221229 실습 -> 자릿수 합 구하기
     @ApiOperation(
             value = "20221229 실습"
             , notes = "자릿수 합 구하기")

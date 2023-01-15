@@ -22,7 +22,6 @@ public class UserRestController {
 
     private final UserService userService;
 
-    // 회원가입
     @ApiOperation(
             value = "회원가입"
             , notes = "userName, password -> 회원가입")
@@ -34,7 +33,6 @@ public class UserRestController {
         return Response.success(userJoinResponse);
     }
 
-    // 로그인
     @ApiOperation(
             value = "로그인"
             , notes = "userName, password -> 로그인 -> jwt token 발급")

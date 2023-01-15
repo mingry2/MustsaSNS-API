@@ -1,37 +1,46 @@
 package com.mutsasns.finalproject_kimmingyeong.service;
 
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.like.LikeAddResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.*;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
-import com.mutsasns.finalproject_kimmingyeong.repository.AlarmRepository;
-import com.mutsasns.finalproject_kimmingyeong.repository.LikeRepository;
-import com.mutsasns.finalproject_kimmingyeong.repository.PostRepository;
-import com.mutsasns.finalproject_kimmingyeong.repository.UserRepository;
+import com.mutsasns.finalproject_kimmingyeong.repository.*;
+import com.mutsasns.finalproject_kimmingyeong.utils.Validator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class LikeService {
 
-    private final LikeRepository likeRepository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final AlarmRepository alarmRepository;
+    private final LikeRepository likeRepository;
+    private final Validator validator;
+    public LikeService(UserRepository userRepository, PostRepository postRepository, AlarmRepository alarmRepository, LikeRepository likeRepository){
+        this.userRepository = userRepository;
+        this.postRepository = postRepository;
+        this.alarmRepository = alarmRepository;
+        this.likeRepository = likeRepository;
+        this.validator = Validator.builder()
+                .userRepository(userRepository)
+                .postRepository(postRepository)
+                .build();
+    }
+
+    // ----------------------------------------------------------------------------------
 
     // 좋아요 누르기
-    public boolean addLike(Long postId, String userName) {
+    public LikeAddResponse addLike(Long postId, String userName) {
 
-        // 로그인 하지 않은 경우
-        User user = userRepository.findByUserName(userName)
-                .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
+        // userName이 있는지 체크
+        User user = validator.validatorUser(userName);
 
-        // 게시물이 존재하지 않는 경우
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
+        // postId가 있는지 체크
+        Post post = validator.validatorPost(postId);
 
         // postId에 userName의 like가 있는지 확인(isPresent 사용을 위해 Optional로 구현)
         Optional<Like> optionalLike = likeRepository.findByUserAndPost(user, post);
@@ -39,23 +48,27 @@ public class LikeService {
         if (optionalLike.isPresent()){ // like가 존재한다면,
             likeRepository.delete(optionalLike.get()); // like를 삭제한다.
 
+            return LikeAddResponse.builder()
+                    .message("좋아요를 취소했습니다.")
+                    .build();
+
         }else { // like가 존재하지 않는다면,
             likeRepository.save(Like.addLike(user, post)); // like를 저장한다.
             alarmRepository.save(Alarm.addAlarm(AlarmType.NEW_LIKE_ON_POST, user, post)); // 알람 저장
 
-            return true;
         }
 
-        return true;
+        return LikeAddResponse.builder()
+                .message("좋아요를 눌렀습니다.")
+                .build();
 
     }
 
     // 좋아요 개수
     public Long countLike(Long postId, String userName) {
 
-        // 게시물이 존재하지 않는 경우
-        Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
+        // postId가 있는지 체크
+        Post post = validator.validatorPost(postId);
 
         // postId에 like 수 확인
         Long count = likeRepository.countByPost(post);

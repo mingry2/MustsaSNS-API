@@ -32,7 +32,6 @@ public class CommentRestController {
 
     private final CommentService commentService;
 
-    // 댓글 등록
     @ApiOperation(
             value = "댓글 등록"
             , notes = "comment -> 댓글 등록 - 회원만 등록 가능")
@@ -50,7 +49,6 @@ public class CommentRestController {
         return Response.success(commentCreateResponse);
     }
 
-    // 댓글 조회
     @ApiOperation(
             value = "댓글 조회"
             , notes = "comment -> 댓글 등록 - 회원/비회원 모두 조회 가능")
@@ -67,7 +65,6 @@ public class CommentRestController {
         return Response.success(list);
     }
 
-    // 댓글 수정
     @ApiOperation(
             value = "댓글 수정"
             , notes = "comment -> 댓글 수정 - 댓글 작성한 회원만 수정 가능")
@@ -95,7 +92,6 @@ public class CommentRestController {
         return Response.success(commentModifyResponse);
     }
 
-    // 댓글 삭제
     @ApiOperation(
             value = "댓글 삭제"
             , notes = "댓글 삭제 - 댓글 작성한 회원만 삭제 가능")
