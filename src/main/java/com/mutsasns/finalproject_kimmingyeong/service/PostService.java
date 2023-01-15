@@ -2,35 +2,37 @@ package com.mutsasns.finalproject_kimmingyeong.service;
 
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostListResponse;
-import com.mutsasns.finalproject_kimmingyeong.domain.entity.Post;
-import com.mutsasns.finalproject_kimmingyeong.domain.entity.User;
-import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
-import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
+import com.mutsasns.finalproject_kimmingyeong.domain.entity.*;
+import com.mutsasns.finalproject_kimmingyeong.repository.CommentRepository;
+import com.mutsasns.finalproject_kimmingyeong.repository.LikeRepository;
 import com.mutsasns.finalproject_kimmingyeong.repository.PostRepository;
 import com.mutsasns.finalproject_kimmingyeong.repository.UserRepository;
 import com.mutsasns.finalproject_kimmingyeong.utils.Validator;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import java.util.Objects;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Slf4j
 public class PostService {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final CommentRepository commentRepository;
+    private final LikeRepository likeRepository;
     private final Validator validator;
-    public PostService(UserRepository userRepository, PostRepository postRepository){
+    public PostService(UserRepository userRepository, PostRepository postRepository, CommentRepository commentRepository, LikeRepository likeRepository){
         this.userRepository = userRepository;
         this.postRepository = postRepository;
+        this.commentRepository = commentRepository;
+        this.likeRepository = likeRepository;
         this.validator = Validator.builder()
                 .userRepository(userRepository)
                 .postRepository(postRepository)
                 .build();
-
     }
 
     // ----------------------------------------------------------------------------------
@@ -83,6 +85,7 @@ public class PostService {
     }
 
     // 포스트 수정
+    @Transactional
     public PostResponse modify(String userName, Long postId, String title, String body) {
 
         // userName이 있는지 체크
@@ -109,6 +112,7 @@ public class PostService {
     }
 
     // 포스트 삭제
+    @Transactional
     public PostResponse delete(Long postId, String userName) {
 
         // userName이 있는지 체크
@@ -124,7 +128,14 @@ public class PostService {
         validator.validatorEqualsUserId(postWriteUserId, loginUserId);
 
         // 포스트 삭제
-        postRepository.deleteById(postId);
+        // 포스트에 달린 댓글 삭제
+        commentRepository.deleteAllByPost(post);
+
+        // 포스트에 달린 좋아요 삭제
+        likeRepository.deleteAllByPost(post);
+
+        // 포스트 삭제
+        postRepository.delete(post);
 
         return PostResponse.builder()
                 .message("포스트 삭제 완료")

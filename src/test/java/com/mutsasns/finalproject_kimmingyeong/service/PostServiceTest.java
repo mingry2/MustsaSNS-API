@@ -7,6 +7,8 @@ import com.mutsasns.finalproject_kimmingyeong.domain.entity.User;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.UserRole;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
+import com.mutsasns.finalproject_kimmingyeong.repository.CommentRepository;
+import com.mutsasns.finalproject_kimmingyeong.repository.LikeRepository;
 import com.mutsasns.finalproject_kimmingyeong.repository.PostRepository;
 import com.mutsasns.finalproject_kimmingyeong.repository.UserRepository;
 import org.junit.jupiter.api.*;
@@ -24,10 +26,12 @@ class PostServiceTest {
     // Mockito.mock을 이용하여 DB 디펜던시를 뺌 -> 스프링과 DB에 종속적이지 않음
     PostRepository postRepository = mock(PostRepository.class);
     UserRepository userRepository = mock(UserRepository.class);
+    CommentRepository commentRepository = mock(CommentRepository.class);
+    LikeRepository likeRepository = mock(LikeRepository.class);
 
     @BeforeEach // 모든 test 실행전 먼저 실행되는 어노테이션
     void setUp() {
-        postService = new PostService(userRepository, postRepository); // new를 사용하여 객체생성
+        postService = new PostService(userRepository, postRepository, commentRepository, likeRepository); // new를 사용하여 객체생성
     }
     String userName = "user";
     String password = "1234";

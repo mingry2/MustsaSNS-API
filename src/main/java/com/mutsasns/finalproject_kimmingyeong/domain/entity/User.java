@@ -13,8 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Data
-@Where(clause = "remove_at is NULL")
-@SQLDelete(sql = "UPDATE user SET remove_at = current_timestamp WHERE user_id = ?")
+//@Where(clause = "remove_at is NULL")
+//@SQLDelete(sql = "UPDATE user SET remove_at = current_timestamp WHERE user_id = ?")
 public class User extends UserBaseEntity{
 
     @Id
@@ -30,18 +30,6 @@ public class User extends UserBaseEntity{
 
     @Column(name = "remove_at")
     private LocalDateTime removeAt; // 삭제된 시간 -> 회원 탈퇴 구현 시 사용
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Post> post = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Comment> comment = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Like> like = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    private List<Alarm> alarm = new ArrayList<>();
 
 
 }
