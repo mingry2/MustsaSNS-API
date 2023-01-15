@@ -22,10 +22,5 @@ public class Post extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
-    private List<Comment> comment = new ArrayList<>();
-
-    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
-    private List<Like> like = new ArrayList<>();
 
 }

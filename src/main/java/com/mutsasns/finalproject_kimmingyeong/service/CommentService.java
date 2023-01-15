@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
@@ -73,6 +74,7 @@ public class CommentService {
     }
 
     // 댓글 수정
+    @Transactional
     public CommentModifyResponse modify(Long postId, Long id, CommentModifyRequest commentModifyRequest, String userName) {
 
         // userName이 있는지 체크
@@ -98,6 +100,7 @@ public class CommentService {
     }
 
     // 댓글 삭제
+    @Transactional
     public CommentDeleteResponse delete(Long postId, Long id, String userName) {
 
         // userName이 있는지 체크

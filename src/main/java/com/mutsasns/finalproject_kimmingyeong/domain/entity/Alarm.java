@@ -18,8 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @Data
-@Where(clause = "deleted_at is NULL")
-@SQLDelete(sql = "UPDATE alarm SET deleted_at = current_timestamp WHERE id = ?")
+//@Where(clause = "deleted_at is NULL")
+//@SQLDelete(sql = "UPDATE alarm SET deleted_at = current_timestamp WHERE id = ?")
 public class Alarm extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

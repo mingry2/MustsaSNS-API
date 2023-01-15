@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Builder
 @Data
+//@SQLDelete(sql = "UPDATE comment SET deleted_at = current_timestamp WHERE comment_id = ?") --> 외래키 참조 에러가 계속남
 @Where(clause = "deleted_at is NULL")
-@SQLDelete(sql = "UPDATE comment SET deleted_at = current_timestamp WHERE comment_id = ?")
 public class Comment extends BaseEntity{
 
     @Id
