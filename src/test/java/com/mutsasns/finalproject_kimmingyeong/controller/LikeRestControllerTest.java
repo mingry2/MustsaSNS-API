@@ -1,6 +1,7 @@
 package com.mutsasns.finalproject_kimmingyeong.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mutsasns.finalproject_kimmingyeong.domain.dto.like.LikeAddResponse;
 import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
 import com.mutsasns.finalproject_kimmingyeong.service.LikeService;
@@ -37,7 +38,7 @@ class LikeRestControllerTest {
         void add_like() throws Exception {
 
             when(likeService.addLike(any(), any()))
-                    .thenReturn(true);
+                    .thenReturn(new LikeAddResponse());
 
             mockMvc.perform(post("/api/v1/posts/1/likes")
                             .with(csrf()))

@@ -1,5 +1,6 @@
 package com.mutsasns.finalproject_kimmingyeong.domain.dto.alarm;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.Alarm;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.AlarmType;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,8 @@ public class AlarmResponse {
     private Long fromUserId;
     private Long targetId;
     private String text;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy/MM/dd HH:mm:ss", timezone = "Asia/Seoul")
     private LocalDateTime createdAt;
 
 }

@@ -28,7 +28,6 @@ public class AlarmRestController {
 
     private final AlarmService alarmService;
 
-    // 받은 알람 조회
     @ApiOperation(
             value = "받은 알람 조회"
             , notes = "NEW_COMMENT_ON_POST / NEW_LIKE_ON_POST 받은 알람 조회")

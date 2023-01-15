@@ -11,4 +11,5 @@ import lombok.NoArgsConstructor;
 @Data
 public class LikeAddResponse {
     private String message;
+
 }

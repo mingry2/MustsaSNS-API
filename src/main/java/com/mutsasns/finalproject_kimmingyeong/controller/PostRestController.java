@@ -27,7 +27,6 @@ public class PostRestController {
 
     private final PostService postService;
 
-    // 포스트 작성
     @ApiOperation(
             value = "포스트 작성"
             , notes = "title, body -> 포스트 작성 - 회원만 작성 가능(token 필)")
@@ -38,7 +37,6 @@ public class PostRestController {
         return Response.success(postResponse);
     }
 
-    // 포스트 전체 조회
     @ApiOperation(
             value = "포스트 조회(전체)"
             , notes = "모든 포스트 조회 - 회원/비회원 모두 조회 가능")
@@ -49,7 +47,6 @@ public class PostRestController {
         return Response.success(list);
     }
 
-    // 포스트 1개 조회
     @ApiOperation(
             value = "포스트 조회(상세)"
             , notes = "포스트 1개 조회 - 회원/비회원 모두 조회 가능")
@@ -68,7 +65,6 @@ public class PostRestController {
         return Response.success(postListResponse);
     }
 
-    // 포스트 수정
     @ApiOperation(
             value = "포스트 수정"
             , notes = "title, body -> 포스트 수정 - 포스트 등록한 회원만 수정 가능(token 필)")
@@ -86,7 +82,6 @@ public class PostRestController {
         return Response.success(postModifiedResponse);
     }
 
-    // 포스트 삭제
     @ApiOperation(
             value = "포스트 삭제"
             , notes = "포스트 삭제 - 포스트 등록한 회원만 삭제 가능(token 필)")
@@ -99,15 +94,10 @@ public class PostRestController {
             , defaultValue = "None")
     @DeleteMapping("/{postId}")
     public Response<PostResponse> delete(@PathVariable Long postId, @ApiIgnore Authentication authentication){
-        postService.delete(postId, authentication.getName());
-        PostResponse postDeletedResponse = PostResponse.builder()
-                .message("포스트 삭제 완료")
-                .postId(postId)
-                .build();
+        PostResponse postDeletedResponse = postService.delete(postId, authentication.getName());
         return Response.success(postDeletedResponse);
     }
 
-    // 마이피드 조회
     @ApiOperation(
             value = "마이피드 조회"
             , notes = "마이피드 조회 - 인증 된 사용자가 작성한 포스트 리스트 조회하는 기능")

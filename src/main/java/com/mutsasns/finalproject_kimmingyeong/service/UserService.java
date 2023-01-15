@@ -7,6 +7,7 @@ import com.mutsasns.finalproject_kimmingyeong.exception.AppException;
 import com.mutsasns.finalproject_kimmingyeong.exception.ErrorCode;
 import com.mutsasns.finalproject_kimmingyeong.repository.UserRepository;
 import com.mutsasns.finalproject_kimmingyeong.utils.JwtTokenUtil;
+import com.mutsasns.finalproject_kimmingyeong.utils.Validator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,16 +15,30 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class UserService {
-    private final UserRepository userRepository;
-    private final BCryptPasswordEncoder encoder;
 
+    // token 설정
     @Value("${jwt.token.secret}")
     private String secretKey;
-//    private Long expiredTimeMs = 1000 * 60 * 60L; // 1시간
+    //    private Long expiredTimeMs = 1000 * 60 * 60L; // 1시간
     private Long expiredTimeMs = 1 * 1000 * 60 * 60L * 24; // 하루
+
+    // ----------------------------------------------------------------------------------
+
+    private final UserRepository userRepository;
+    private final BCryptPasswordEncoder encoder;
+    private final Validator validator;
+    public UserService(UserRepository userRepository, BCryptPasswordEncoder encoder){
+        this.userRepository = userRepository;
+        this.encoder = encoder;
+        this.validator = Validator.builder()
+                .userRepository(userRepository)
+                .build();
+
+    }
+
+    // ----------------------------------------------------------------------------------
 
     // 회원가입
     public UserJoinResponse join(String userName, String password) {
@@ -39,8 +54,8 @@ public class UserService {
                 .password(encoder.encode(password))
                 .role(UserRole.USER)
                 .build();
+
         userRepository.save(user);
-        log.debug("User: {}", user);
 
         return UserJoinResponse.builder()
                 .userId(user.getUserId())
@@ -50,21 +65,22 @@ public class UserService {
 
     // 로그인
     public String login(String userName, String password) {
-        // userName 없음
-        User findUser = userRepository.findByUserName(userName)
-                .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
+        // userName이 있는지 체크
+        User user = validator.validatorUser(userName);
 
-        // password 틀림
-        log.info("findUserName : {} findPassword : {} ", findUser.getPassword(), findUser.getPassword());
-        if (!encoder.matches(password, findUser.getPassword()))
+        // password 맞는지 체크
+        log.info("password : {} findUserPassword : {} ", password, user.getPassword());
+
+        if (!encoder.matches(password, user.getPassword()))
             throw new AppException(ErrorCode.INVALID_PASSWORD, ErrorCode.INVALID_PASSWORD.getMessage());
 
-        // 성공 -> token 발행
-        String token = JwtTokenUtil.createToken(findUser.getUserName(), secretKey, expiredTimeMs);
+        // 로그인 성공 -> token 발행
+        String token = JwtTokenUtil.createToken(user.getUserName(), secretKey, expiredTimeMs);
 
         return token;
     }
 
+    // UserDetail
     public User getUserByUserName(String userName) {
         return userRepository.findByUserName(userName)
                 .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
