@@ -3,10 +3,7 @@ package com.mutsasns.finalproject_kimmingyeong.service;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.dto.post.PostListResponse;
 import com.mutsasns.finalproject_kimmingyeong.domain.entity.*;
-import com.mutsasns.finalproject_kimmingyeong.repository.CommentRepository;
-import com.mutsasns.finalproject_kimmingyeong.repository.LikeRepository;
-import com.mutsasns.finalproject_kimmingyeong.repository.PostRepository;
-import com.mutsasns.finalproject_kimmingyeong.repository.UserRepository;
+import com.mutsasns.finalproject_kimmingyeong.repository.*;
 import com.mutsasns.finalproject_kimmingyeong.utils.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -23,12 +20,14 @@ public class PostService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
     private final LikeRepository likeRepository;
+    private final AlarmRepository alarmRepository;
     private final Validator validator;
-    public PostService(UserRepository userRepository, PostRepository postRepository, CommentRepository commentRepository, LikeRepository likeRepository){
+    public PostService(UserRepository userRepository, PostRepository postRepository, CommentRepository commentRepository, LikeRepository likeRepository, AlarmRepository alarmRepository){
         this.userRepository = userRepository;
         this.postRepository = postRepository;
         this.commentRepository = commentRepository;
         this.likeRepository = likeRepository;
+        this.alarmRepository = alarmRepository;
         this.validator = Validator.builder()
                 .userRepository(userRepository)
                 .postRepository(postRepository)

@@ -1,5 +1,6 @@
 package com.mutsasns.finalproject_kimmingyeong.domain.entity;
 
+import lombok.Data;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -9,7 +10,7 @@ import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 import java.time.LocalDateTime;
 
-@Getter
+@Data
 @MappedSuperclass // [JPA] 부모 클래스는 테이블과 매핑하지 않고 부모 클래스를 상속받는 자식 클래스에게 매핑 정보만 제공
 @EntityListeners(AuditingEntityListener.class)
 public class UserBaseEntity {
