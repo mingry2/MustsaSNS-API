@@ -1,6 +1,6 @@
 <div align="center">
 
-![](img/제목 없음.png)
+![](img/멋사스네스타이틀.png)
 
 <a href="http://ec2-13-209-66-87.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/" target="_blank"><img src="https://img.shields.io/badge/swagger-4285F4?style=flat&logo=Google Chrome&logoColor=white" /></a>
 </div>
