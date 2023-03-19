@@ -26,6 +26,15 @@
 - 데이터베이스 : MySql 8.0
 - 필수 라이브러리 : SpringBoot Web, MySQL, Spring Data JPA, Lombok, Spring Security
 
+## 📌 tech stack
+### back_end
+![](img/skill1.png)
+### tool
+![](img/skill2.png)
+### infra
+![](img/스킬.png)
+### test & DB
+![](img/skill4.png)
 
 ## 📊 ERD
 ![](img/final_project_erd.png)
