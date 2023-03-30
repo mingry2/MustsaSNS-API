@@ -142,7 +142,9 @@ public class ExceptionManager {
 }
 ```
 ![](img/에러반환.png)
+
 ---
+
 ### ✅ 회원가입/로그인 (url : `/api/v1/users`)
 1. Spring Security + JWT
 2. 회원가입 시 password 는 `BCryptPasswordEncoder` 클래스를 사용하여 암호화 후 DB 저장
@@ -182,7 +184,7 @@ public class ExceptionManager {
 {
   "resultCode": "SUCCESS",
   "result": {
-        "jwt": "eyJhbGciOiJIU...",
+          "jwt": "eyJhbGciOiJIU...",
         }
 }
 ```
@@ -207,8 +209,8 @@ public class ExceptionManager {
 {
     "resultCode":"SUCCESS",
     "result":{
-        "message":"포스트 등록 완료",
-        "postId":0
+          "message":"포스트 등록 완료",
+          "postId":0
         }
 }
 ```
@@ -227,8 +229,8 @@ public class ExceptionManager {
 {
     "resultCode":"SUCCESS",
         "result":{
-        "message":"포스트 수정 완료",
-        "postId":0
+          "message":"포스트 수정 완료",
+          "postId":0
         }
 }
 ```
@@ -240,8 +242,8 @@ public class ExceptionManager {
 {
     "resultCode":"SUCCESS",
         "result":{
-        "message":"포스트 수정 완료",
-        "postId":0
+          "message":"포스트 삭제 완료",
+          "postId":0
         }
 }
 ```
@@ -303,7 +305,7 @@ Pageable ((최신순, 20개씩 표시))
         "userName" : "user1",
         "createdAt" : "yyyy-mm-dd hh:mm:ss",
         "lastModifiedAt" : "yyyy-mm-dd hh:mm:ss"
-        }
+    }
 }
 ```
 
@@ -330,7 +332,7 @@ Pageable ((최신순, 20개씩 표시))
         "userName": "test",
         "postId": 2,
         "createdAt": "2022-12-20T16:15:04.270741"
-        }
+    }
 }
 ```
 
@@ -358,7 +360,7 @@ Pageable ((최신순, 20개씩 표시))
     "result":{
         "message": "댓글 삭제 완료",
         "id": 4
-        }
+    }
 }
 ```
 
