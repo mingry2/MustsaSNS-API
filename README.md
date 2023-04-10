@@ -95,7 +95,7 @@ http://ec2-13-209-66-87.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/
 `GET /api/v1/alarms `
 
 # 기능구현
-### ✅ 프로젝트 빌드
+### ✅ 프로젝트 빌드 
 ```java
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
